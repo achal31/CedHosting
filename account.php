@@ -38,20 +38,20 @@ else {
                                     <!------------USERNAME INPUT FIELD-------------->
                                 <span>Name<label>*</label></span>
 
-                                 <input type="text" id="username" name="username" pattern="[a-zA-Z][a-zA-Z]" oninvalid="InvalidMsg(this);"
+                                 <input type="text" id="username" name="username" pattern="^[a-zA-Z ]*$" oninvalid="InvalidMsg(this);"
             oninput="InvalidMsg(this);"  required>
                                 </div>
                                 <div>
                                     <!-------------USER EMAIL ADDRESS---------------->
                                     <span>Email Address<label>*</label></span>
-                                    <input type="text" id="useremail" name="email" pattern="^[A-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Z0-9.-]+$" oninvalid="InvalidMsg(this);"
+                                    <input type="text" id="useremail" name="email" pattern="^(?!.*\.{2})[a-zA-Z0-9.]+@[a-zA-Z]+(?:\.[a-zA-Z]+)*$" oninvalid="InvalidMsg(this);"
             oninput="InvalidMsg(this);"  required>
                                 </div>
                                 
                                 <div>
                                     <!-------------USER MOBILE NUMBER------------------>
                                 <span>Mobile Number<label>*</label></span>
-                                <input type="text" id="userphone" name="mobile" pattern="[1-9]{1}[0-9]{9}" oninvalid="InvalidMsg(this);"
+                                <input type="text" id="userphone" name="mobile" pattern="(([1-9]{1}[0-9]{9})|([0]{1}[0-9]{10}))" oninvalid="InvalidMsg(this);"
             oninput="InvalidMsg(this);"  required> 
                                 </div>
                                 

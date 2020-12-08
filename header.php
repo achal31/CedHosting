@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
     
 }
+
 $activePage = basename($_SERVER['REQUEST_URI']);
 $pages=array('linuxhosting.php','wordpresshosting.php','windowshosting.php','cmshosting.php');
 ?>
@@ -41,28 +42,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
    <link href="style.css" rel="stylesheet">
     <!---fonts-->
-    <!--script-->
-
-    <script src="js/modernizr.custom.97074.js"></script>
-    <script src="js/jquery.chocolat.js"></script>
-    <link rel="stylesheet" href="css/chocolat.css" type="text/css" media="screen">
-    <!--lightboxfiles-->
-    <script type="text/javascript">
-        $(function() {
-            $('.team a').Chocolat();
-        });
-    </script>
-    <script type="text/javascript" src="js/jquery.hoverdir.js"></script>
-    <script type="text/javascript">
-        $(function() {
-
-            $(' #da-thumbs > li ').each(function() {
-                $(this).hoverdir();
-            });
-
-        });
-    </script>
-    <!--script-->
 </head>
 
 <body>
