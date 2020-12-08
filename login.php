@@ -1,5 +1,28 @@
 <?php 
+
+if (!isset($_SESSION))
+{
+    session_start();
+
+}
+if(isset($_SESSION['username']))
+{
+
+    header("Location:index.php.");
+}
+
+
 include('header.php');
+include_once ('Classes/User.php');
+if(isset($_POST['login']))
+{
+$user_email=$_POST['useremail'];
+$user_pass=$_POST['userpassword'];
+$accountLogin = new User();
+    $sql = $accountLogin->userLogin($user_email,$user_pass);
+
+
+}
 ?>
     <!---login--->
     <div class="content">
@@ -10,22 +33,25 @@ include('header.php');
                         <div class="col-md-6 login-left">
                             <h3>new customers</h3>
                             <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
-                            <a class="acount-btn" href="account.html">Create an Account</a>
+                            <a class="acount-btn" href="account.php">Create an Account</a>
                         </div>
                         <div class="col-md-6 login-right">
                             <h3>registered</h3>
                             <p>If you have an account with us, please log in.</p>
-                            <form>
+                            <!-------------FORM FOR USER LOGIN-------------------->
+                            <form action="login.php" method="post">
+                                <!-----------EMAIL INPUT FIELD-------------------->
                                 <div>
                                     <span>Email Address<label>*</label></span>
-                                    <input type="text">
+                                    <input type="text" name="useremail" required>
                                 </div>
+                                <!----------PASSWORD INPUT FIELD------------------->
                                 <div>
                                     <span>Password<label>*</label></span>
-                                    <input type="password">
+                                    <input type="password" name="userpassword">
                                 </div>
                                 <a class="forgot" href="#">Forgot Your Password?</a>
-                                <input type="submit" value="Login">
+                                <input type="submit" value="Login" name="login" required>
                             </form>
                         </div>
                         <div class="clearfix"> </div>

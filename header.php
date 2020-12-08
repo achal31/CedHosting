@@ -1,4 +1,8 @@
 <?php 
+if (!isset($_SESSION)) {
+    session_start();
+    
+}
 $activePage = basename($_SERVER['REQUEST_URI']);
 $pages=array('linuxhosting.php','wordpresshosting.php','windowshosting.php','cmshosting.php');
 ?>
@@ -35,6 +39,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+   <link href="style.css" rel="stylesheet">
     <!---fonts-->
     <!--script-->
 
@@ -85,7 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li <?php if($activePage == "index.php")echo 'class="active"'; ?> ><a href="index.php">Home <i class="sr-only">(current)</i></a></li>
                             <li <?php if($activePage == "about.php")echo 'class="active"'; ?> ><a href="about.php">About</a></li>
                             <li <?php if($activePage == "products.php")echo 'class="active"'; ?> ><a href="#">Services</a></li>
-                            <li class="dropdown">
+                            <li class="dropdown <?php if (in_array($activePage, $pages)):?>active<?php endif; ?>">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
 										<li><a href="linuxhosting.php">Linux hosting</a></li>
@@ -98,7 +103,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li <?php if($activePage == "blog.php")echo 'class="active"'; ?> ><a href="blog.php">blog</a></li>
                             <li <?php if($activePage == "contact.php")echo 'class="active"'; ?> ><a href="contact.php">Contact</a></li>
                             <li <?php if($activePage == "codes.php")echo 'class="active"'; ?> ><a href="codes.php"><i class="fa fa-shopping-cart" style="font-size:22px;color:#E6653D"></i></a></li>
-                            <li <?php if($activePage == "portfolio.php")echo 'class="active"'; ?> ><a href="portfolio.php">Logout</a></li> 
+                           <?php if(isset($_SESSION['username']))
+                           {
+                               ?>
+                                <li <?php if($activePage == "logout.php")echo 'class="active"'; ?> ><a href="logout.php">Logout</a></li> 
+                          <?php }
+                           else {
+                               ?>
+                           
+                            <li <?php if($activePage == "login.php")echo 'class="active"'; ?> ><a href="login.php">Login</a></li> 
+                          <?php } ?> 
                         </ul>
 
                     </div>
