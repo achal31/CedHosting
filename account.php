@@ -38,7 +38,7 @@ else {
                                     <!------------USERNAME INPUT FIELD-------------->
                                 <span>Name<label>*</label></span>
 
-                                 <input type="text" id="username" name="username" pattern="^[a-zA-Z ]*$" oninvalid="InvalidMsg(this);"
+                                 <input type="text" id="username" name="username" pattern="^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$" oninvalid="InvalidMsg(this);"
             oninput="InvalidMsg(this);"  required>
                                 </div>
                                 <div>
@@ -70,14 +70,14 @@ else {
                                 <div>
                                     <!-------------USER PASSWORD--------------->
                                    <span>Password<label>*</label></span>
-                                <input type="password" id="userpassword" name="pass" pattern="^((?!.*[\s])(?=.*[A-Z])(?=.*\d).{8,16})" oninvalid="InvalidMsg(this);"
+                                <input type="password" id="userpassword" name="pass" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" oninvalid="InvalidMsg(this);"
             oninput="InvalidMsg(this);"  required>
 
                              </div>
                                 <div>
                                     <!---------USER CONFIRM PASSWORD------------>
                                    <span>Confirm Password<label>*</label></span>
-                                   <input type="password" id="userconfirmpassword" name="repass" pattern=".{8,}" oninvalid="InvalidMsg(this);"
+                                   <input type="password" id="userconfirmpassword" name="repass" oninvalid="InvalidMsg(this);"
             oninput="InvalidMsg(this);"  required> 
                             </div>
                             <div>
