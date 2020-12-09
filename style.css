@@ -8,3 +8,18 @@
     font-size: 1em;
     padding: 0.5em;
 }
+
+.verify {
+    background: #e7663f !important;
+    color: #FFF !important;
+    font-size: 1em !important;
+    padding: 0.7em 1.2em !important;
+    transition: 0.5s all !important;
+    -webkit-transition: 0.5s all !important;
+    -moz-transition: 0.5s all !important;
+    -o-transition: 0.5s all !important;
+    display: inline-block !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    outline: none !important;
+}

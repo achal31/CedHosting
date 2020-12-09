@@ -43,15 +43,19 @@ $accountLogin = new User();
                                 <!-----------EMAIL INPUT FIELD-------------------->
                                 <div>
                                     <span>Email Address<label>*</label></span>
-                                    <input type="text" name="useremail" required>
+                                    <input type="text" name="useremail" value="<?php if(isset($_POST['login'])){ echo $user_email; }?>"required>
                                 </div>
                                 <!----------PASSWORD INPUT FIELD------------------->
                                 <div>
                                     <span>Password<label>*</label></span>
-                                    <input type="password" name="userpassword">
+                                    <input type="password" name="userpassword" id="userpassword" value="<?php if(isset($_POST['login'])){ echo $user_pass; }?>" required> 
+                                </div>
+                                <div>
+                                <input type="checkbox" onclick="myFunction()">
+                                   <span>Show Password<label>*</label></span>
                                 </div>
                                 <a class="forgot" href="#">Forgot Your Password?</a>
-                                <input type="submit" value="Login" name="login" required>
+                                <input type="submit" value="Login" name="login">
                             </form>
                         </div>
                         <div class="clearfix"> </div>
@@ -63,3 +67,15 @@ $accountLogin = new User();
     <!-- login -->
     <!---footer--->
     <?php include('footer.php'); ?>
+    <script>
+        /***********FUNCTION TO USER THE PASSWORD FIELD INPUT********* */
+function myFunction(id) {
+    var x = document.getElementById("userpassword");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
+    </script>

@@ -39,20 +39,20 @@ else {
                                 <span>Name<label>*</label></span>
 
                                  <input type="text" id="username" name="username" pattern="^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$" oninvalid="InvalidMsg(this);"
-            oninput="InvalidMsg(this);"  required>
+            oninput="InvalidMsg(this);" value="<?php if(isset($_POST['submit'])) { echo $user_name ;} ?>" required>
                                 </div>
                                 <div>
                                     <!-------------USER EMAIL ADDRESS---------------->
                                     <span>Email Address<label>*</label></span>
                                     <input type="text" id="useremail" name="email" pattern="^(?!.*\.{2})[a-zA-Z0-9.]+@[a-zA-Z]+(?:\.[a-zA-Z]+)*$" oninvalid="InvalidMsg(this);"
-            oninput="InvalidMsg(this);"  required>
+            oninput="InvalidMsg(this);" value="<?php if(isset($_POST['submit'])) { echo $user_email ;} ?>"  required>
                                 </div>
                                 
                                 <div>
                                     <!-------------USER MOBILE NUMBER------------------>
                                 <span>Mobile Number<label>*</label></span>
                                 <input type="text" id="userphone" name="mobile" pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$" oninvalid="InvalidMsg(this);"
-            oninput="InvalidMsg(this);"  required> 
+            oninput="InvalidMsg(this);" value="<?php if(isset($_POST['submit'])) { echo $user_mobile ;} ?>"  required> 
                                 </div>
                                 
                                 <div class="clearfix"> </div>
@@ -71,14 +71,14 @@ else {
                                     <!-------------USER PASSWORD--------------->
                                    <span>Password<label>*</label></span>
                                 <input type="password" id="userpassword" name="pass" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" oninvalid="InvalidMsg(this);"
-            oninput="InvalidMsg(this);"  required>
+            oninput="InvalidMsg(this);" value="<?php if(isset($_POST['submit'])) { echo $user_password ;} ?>"  required>
 
                              </div>
                                 <div>
                                     <!---------USER CONFIRM PASSWORD------------>
                                    <span>Confirm Password<label>*</label></span>
                                    <input type="password" id="userconfirmpassword" name="repass" oninvalid="InvalidMsg(this);"
-            oninput="InvalidMsg(this);"  required> 
+            oninput="InvalidMsg(this);" value="<?php if(isset($_POST['submit'])) { echo $user_repassword ;} ?>" required> 
                             </div>
                             <div>
                                     <!---------SHOW USER THE PASSWORD------------>
@@ -104,19 +104,19 @@ else {
                                 <span>Security Questions<label>*</label></span>
 
                                <select id="selectquestion" name="selectquestion" required>
-                                   <option value="What is your Nick name?">What is your Nick name?</option>
-                                   <option value="What is your pet name?">What is your pet name?</option>
-                                   <option value="What is the name of your school?">What is the name of your school?</option>
+                                   <option value="What is your Nick name?" <?php if(isset($_POST['submit'])) { if($user_question == 'What is your Nick name?'){  echo 'Selected';}} ?> >What is your Nick name?</option>
+                                   <option value="What is your pet name?" <?php if(isset($_POST['submit'])) { if($user_question == 'What is your pet name?'){  echo 'Selected';}} ?>>What is your pet name?</option>
+                                   <option value="What is the name of your school?" <?php if(isset($_POST['submit'])) { if($user_question == 'What is the name of your school?'){  echo 'Selected';}} ?>>What is the name of your school?</option>
 
-                                   <option value="What is the name of your best friend?">What is the name of your best friend?</option>
-                                   <option value="What is Collge Name?">What is Collge Name?</option>
+                                   <option value="What is the name of your best friend?" <?php if(isset($_POST['submit'])) { if($user_question == 'What is the name of your best friend?'){  echo 'Selected';}} ?>>What is the name of your best friend?</option>
+                                   <option value="What is Collge Name?" <?php if(isset($_POST['submit'])) { if($user_question == 'What is Collge Name?'){  echo 'Selected';}} ?>>What is Collge Name?</option>
                                </select>
 
                             </div>
                             <!---------------SECURITY ANSWER FIELD--------------->
                             <div>
                                 <span>Security Answer<label>*</label></span>
-                                <input type="text" name="selectanswer" required>
+                                <input type="text" name="selectanswer" pattern="^([A-Za-z0-9]+ )+[A-Za-z0-9]+$|^[A-Za-z0-9]+$" value="<?php if(isset($_POST['submit'])) { echo $user_answer ;} ?>" required>
 
                             </div>
                         </div>

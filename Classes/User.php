@@ -26,15 +26,17 @@ class User
         {
             /*----------PASSWORD MD5 ENCY-----------------------------*/
             $enc_userpass=md5($userpass);
+            /*----------RANDOM TOKEN GENERATED------------------------*/
+            $token=bin2hex(random_bytes(15));
             /*------------QUERY TO INSERT USER DETAIL--------------*/
-            $insertuserDetail = mysqli_query($this->dbh, "INSERT into tbl_user ( email, name, mobile, active, is_admin, password, security_question, security_answer) VALUES('$useremail', '$username', '$usermobile','1', '0','$enc_userpass', '$userquestion', '$useranswer')");
+            $insertuserDetail = mysqli_query($this->dbh, "INSERT into tbl_user ( email, name, mobile,token, active, is_admin, password, security_question, security_answer) VALUES('$useremail', '$username', '$usermobile','$token','1', '0','$enc_userpass', '$userquestion', '$useranswer')");
             /*------------------WHETHER QUERY EXECUTE OR NOT-----------*/    
-           
+       
             if($insertuserDetail)
                 {
-                    /*--------------TAKING HEADER TO LOGIN PAGE-----------------*/
-                    echo "<script>alert('Registration successfull.');</script>";
-                    echo "<script>window.location.href='login.php'</script>";
+                    echo "<script>alert('Please Verify Your Contact');</script>";
+                    $ency_email=md5($useremail);
+                    echo "<script>window.location.href='userverification.php?static=$ency_email'</script>";
                 }
                 else {
                     /*--------------IF QUERY DOESNT EXECUTE---------------------*/
@@ -61,13 +63,36 @@ class User
         $useravailable=mysqli_num_rows($userlogincheck);
         if($useravailable=='1')
         {
-            $_SESSION['username']=$userdata['name'];
+          
+            if($userdata['active']=='0')
+            {
+                $ency_email=md5($email);
+                echo "<script>window.location.href='userverification.php?static=$ency_email'</script>";
+            }
+            else {
+                $_SESSION['username']=$userdata['name'];
+                echo "<script>window.location.href='index.php'</script>";
+            }
             /*----------------SENDING HEADER ON ANOTHER PAGE------------------*/
-            echo "<script>window.location.href='index.php'</script>";
+          
         }
         else{
             /*----------------IF DETAIL DOESWNT MATCH-------------------------*/
             echo "<script>alert('Account Detail Doesnt Match');</script>";
+        }
+    }
+
+    /*-------------------FUNCTION TO GET THE USER DETAILS----------------------------*/
+    public function getdetail()
+    {
+        $userlogincheck= mysqli_query($this->dbh, "SELECT email,mobile FROM tbl_user");
+        if (mysqli_num_rows($userlogincheck) > 0)
+        {
+            return $userlogincheck;
+        }
+        else
+        {
+            return 0;
         }
     }
 }
