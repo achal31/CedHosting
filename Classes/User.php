@@ -26,10 +26,8 @@ class User
         {
             /*----------PASSWORD MD5 ENCY-----------------------------*/
             $enc_userpass=md5($userpass);
-            /*----------RANDOM TOKEN GENERATED------------------------*/
-            $token=bin2hex(random_bytes(15));
             /*------------QUERY TO INSERT USER DETAIL--------------*/
-            $insertuserDetail = mysqli_query($this->dbh, "INSERT into tbl_user ( email, name, mobile,token, active, is_admin, password, security_question, security_answer) VALUES('$useremail', '$username', '$usermobile','$token','1', '0','$enc_userpass', '$userquestion', '$useranswer')");
+            $insertuserDetail = mysqli_query($this->dbh, "INSERT into tbl_user ( email, name, mobile, active, is_admin, password, security_question, security_answer) VALUES('$useremail', '$username', '$usermobile','1', '0','$enc_userpass', '$userquestion', '$useranswer')");
             /*------------------WHETHER QUERY EXECUTE OR NOT-----------*/    
        
             if($insertuserDetail)
@@ -63,7 +61,7 @@ class User
         $useravailable=mysqli_num_rows($userlogincheck);
         if($useravailable=='1')
         {
-          
+            
             if($userdata['active']=='0')
             {
                 $ency_email=md5($email);
@@ -85,7 +83,7 @@ class User
     /*-------------------FUNCTION TO GET THE USER DETAILS----------------------------*/
     public function getdetail()
     {
-        $userlogincheck= mysqli_query($this->dbh, "SELECT email,mobile FROM tbl_user");
+        $userlogincheck= mysqli_query($this->dbh, "SELECT email,mobile,active FROM tbl_user");
         if (mysqli_num_rows($userlogincheck) > 0)
         {
             return $userlogincheck;
@@ -93,6 +91,16 @@ class User
         else
         {
             return 0;
+        }
+    }
+
+    public function userverify($data)
+    {
+        $userlogincheck= mysqli_query($this->dbh, "SELECT * FROM tbl_user");
+        $userdata = mysqli_fetch_assoc($userlogincheck);
+        if($data==md5($userdata['email']))
+        {
+        $userlogincheck= mysqli_query($this->dbh, "UPDATE tbl_user SET `active`='1' ,`email_approved`='1' WHERE `email`='$userdata[email]'");
         }
     }
 }

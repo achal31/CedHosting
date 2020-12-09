@@ -87,11 +87,11 @@ If you want to get inspiration or just show something directly to your clients, 
 
 | Start page | User profile page | Tables page  |
 | --- | --- | ---  |
-| [![Start page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/start-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard)  | [![User profile page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/profile-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/profile.html)  | [![Tables pages](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/tables-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/tables.html)
+| [![Start page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/start-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard)  | [![User profile page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/profile-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/profile.php)  | [![Tables pages](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/tables-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/tables.html)
 
 | Maps page | Register page | Login page  |
 | --- | --- | ---  |
-| [![Maps page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/maps-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/maps.html)  | [![Register page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/register-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/register.html)  | [![Login page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/login-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/login.html)
+| [![Maps page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/maps-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/maps.php)  | [![Register page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/register-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/register.html)  | [![Login page](https://github.com/creativetimofficial/public-assets/blob/master/argon-dashboard/login-page.png?raw=true)](https://demos.creative-tim.com/argon-dashboard/examples/login.html)
 
 
 

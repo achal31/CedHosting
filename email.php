@@ -2,7 +2,7 @@
 if(isset($_POST['SendMail']))
 {
     $email=$_POST['email'];
- 
+ $ency_mail=md5($email);
 
 }
 /**
@@ -50,8 +50,8 @@ $mailer->setfrom('achalsaxena31@gmail.com', 'Name of sender');
 $mailer->addAddress($email, 'Name of recipient');
 
 $mailer->isHTML(true);
-$mailer->Subject = 'PHPMailer Test';
-$mailer->Body = 'This is a <b>SAMPLE<b> email sent through <b>PHPMailer<b>';
+$mailer->Subject = 'Verification mail';
+$mailer->Body = "<a href='http://localhost/cedhosting/verify.php?data=$ency_mail'>Click Here</a>To Activate Your Account";
 
 $mailer->send();
 $mailer->ClearAllRecipients();
@@ -59,3 +59,5 @@ echo "MAIL HAS BEEN SENT SUCCESSFULLY";
 } catch (Exception $e) {
 echo "EMAIL SENDING FAILED. INFO: " . $mailer->ErrorInfo;
 }
+$data=md5($email);
+header('Location:userverification.php?send='.$data);

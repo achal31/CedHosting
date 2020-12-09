@@ -1,9 +1,17 @@
 <?php 
 include('header.php');
 include_once ('Classes/User.php');
-if(isset($_GET['static']))
+if(isset($_GET['static'])||isset($_GET['send']))
 {
-    
+    if(isset($_GET['send']))
+    {
+        $val=$_GET['send'];
+        echo"<script>alert('Email Sended Successfully');</script>";
+    }
+    else{
+        $val=$_GET['static'];
+
+    }
     $userdata = new User();
        $sql= $userdata->getdetail();
        if($sql=='0')
@@ -13,11 +21,20 @@ if(isset($_GET['static']))
        else {
            foreach($sql as $result)
            { 
-            if(md5($result['email'])==$_GET['static'])
+            if(md5($result['email'])==$val)
             { 
                 $email=$result['email'];
                 $mobile=$result['mobile'];
-               
+               if($result['active']=='1')
+               {
+                   ?>
+                   <script>
+                   $(document).ready(function(){
+                    $('#emailverification').val('Verified');
+                   });
+                   </script>
+                   <?php
+               }
             }
            }
        }
@@ -40,7 +57,7 @@ if(isset($_GET['static']))
                                 <span>Email Address<label>*</label></span>
                                 <input type="text" id="useremail" name="email" pattern="^(?!.*\.{2})[a-zA-Z0-9.]+@[a-zA-Z]+(?:\.[a-zA-Z]+)*$" value="<?php echo $email;?>">
                                 <div class="register-but">
-                                <button type="submit" name="SendMail" class="btn btn-success verify" id="emailverification">Verify</button>
+                                <input type="submit" name="SendMail" class="btn btn-success verify" value="Verify" id="emailverification">
                                  </div>
                                 </div>
                                 </form>
