@@ -1,4 +1,16 @@
-<?php include('header.php'); ?>
+<?php 
+if (!isset($_SESSION)) {
+    session_start();
+    
+}
+if(isset($_SESSION['usertype']))
+{
+    if($_SESSION['usertype']=='0')
+    {
+        header('Location:index.php');
+    }
+}
+include('header.php'); ?>
 <!-- Header -->
 <!-- Header -->
 <div class="header bg-primary pb-6">

@@ -35,16 +35,16 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col" class="sort" data-sort="name">Project</th>
-                                <th scope="col" class="sort" data-sort="budget">Budget</th>
-                                <th scope="col" class="sort" data-sort="status">Status</th>
-                                <th scope="col">Users</th>
-                                <th scope="col" class="sort" data-sort="completion">Completion</th>
-                                <th scope="col"></th>
+                                <th scope="col" class="sort" data-sort="S.No"></th>
+                                <th scope="col" class="sort" data-sort="Sub Category">Sub Category</th>
+                                <th scope="col" class="sort" data-sort="Status">Status</th>
+                                <th scope="col" class="sort" data-sort="Launch Date">Launch Date</th>
                             </tr>
                         </thead>
                         <tbody class="list">
                             <tr>
+
+
                                 <th scope="row">
                                     <div class="media align-items-center">
                                         <a href="#" class="avatar rounded-circle mr-3">
@@ -55,15 +55,21 @@
                                         </div>
                                     </div>
                                 </th>
+
+
                                 <td class="budget">
                                     $2500 USD
                                 </td>
+
+
                                 <td>
                                     <span class="badge badge-dot mr-4">
                         <i class="bg-warning"></i>
                         <span class="status">pending</span>
                                     </span>
                                 </td>
+
+
                                 <td>
                                     <div class="avatar-group">
                                         <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
@@ -80,6 +86,8 @@
                                         </a>
                                     </div>
                                 </td>
+
+
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <span class="completion mr-2">60%</span>
@@ -90,6 +98,8 @@
                                         </div>
                                     </div>
                                 </td>
+
+
                                 <td class="text-right">
                                     <div class="dropdown">
                                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -102,6 +112,8 @@
                                         </div>
                                     </div>
                                 </td>
+
+                                
                             </tr>
                             <tr>
                                 <th scope="row">

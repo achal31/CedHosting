@@ -1,19 +1,23 @@
 <?php 
-
-if (!isset($_SESSION))
-{
+if (!isset($_SESSION)) {
     session_start();
-
+    
 }
-if(isset($_SESSION['username']))
+if(isset($_SESSION['usertype']))
 {
-
-    header("Location:index.php.");
+echo $_SESSION['usertype'];
+    if($_SESSION['usertype']=='1')
+    {
+        header("Location:admin/dashboard.php");
+    }else if($_SESSION['usertype']=='0')
+    {
+        header('Location:index.php');
+    }
 }
 
 
 include('header.php');
-include_once ('Classes/User.php');
+include_once ('./Classes/User.php');
 if(isset($_POST['login']))
 {
 $user_email=$_POST['useremail'];

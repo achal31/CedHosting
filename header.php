@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
     
 }
-
+include_once ('Classes/Product.php'); 
 $activePage = basename($_SERVER['REQUEST_URI']);
 $pages=array('linuxhosting.php','wordpresshosting.php','windowshosting.php','cmshosting.php');
 ?>
@@ -42,6 +42,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
    <link href="style.css" rel="stylesheet">
+   <script src="script.js"></script>
     <!---fonts-->
 </head>
 
@@ -73,21 +74,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li class="dropdown <?php if (in_array($activePage, $pages)):?>active<?php endif; ?>">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
-										<li><a href="linuxhosting.php">Linux hosting</a></li>
-										<li><a href="wordpresshosting.php">WordPress Hosting</a></li>
-										<li><a href="windowshosting.php">Windows Hosting</a></li>
-										<li><a href="cmshosting.php">CMS Hosting</a></li>
+                                    <?php 
+                                                $category = new Product();
+                                                    $sql = $category->getsubcategory();
+                                                    if($sql=='0')
+                                                    {
+                                                        echo "No Data Available";
+                                                    }
+                                                    else {
+                                                        foreach($sql as $subcategory)
+                                                        {
+                                                            echo"<li><a href='$subcategory[link]'>$subcategory[prod_name]</a></li>";
+                                                        }
+                                                    }
+                                                        ?>
 									</ul>			
 								</li>
                             <li <?php if($activePage == "services.php")echo 'class="active"'; ?> ><a href="services.php">Pricing</a></li>
                             <li <?php if($activePage == "blog.php")echo 'class="active"'; ?> ><a href="blog.php">blog</a></li>
                             <li <?php if($activePage == "contact.php")echo 'class="active"'; ?> ><a href="contact.php">Contact</a></li>
                             <li <?php if($activePage == "codes.php")echo 'class="active"'; ?> ><a href="codes.php"><i class="fa fa-shopping-cart" style="font-size:22px;color:#E6653D"></i></a></li>
-                           <?php if(isset($_SESSION['username']))
-                           {
-                               ?>
+                           <?php if(isset($_SESSION['usertype']))
+                           {   
+                               if($_SESSION['usertype']=='0')
+                               {
+                              ?>
                                 <li <?php if($activePage == "logout.php")echo 'class="active"'; ?> ><a href="logout.php">Logout</a></li> 
                           <?php }
+                          else{
+                              ?>
+                            <li <?php if($activePage == "login.php")echo 'class="active"'; ?> ><a href="login.php">Login</a></li> 
+                          <?php }}
                            else {
                                ?>
                            

@@ -1,4 +1,4 @@
-  <!--
+ <!--
 =========================================================
 * Argon Dashboard - v1.2.0
 =========================================================
@@ -31,8 +31,18 @@
     <link rel="stylesheet" href="assets/vendor/nucleo/css/nucleo.css" type="text/css">
     <link rel="stylesheet" href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
     <!-- Page plugins -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
     <!-- Argon CSS -->
+    <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="assets/css/argon.css?v=1.2.0" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 </head>
 
 <body>
@@ -42,7 +52,7 @@
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
-          <img src="assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+          <img src="../CEDHOSTING.png"  alt="...">
         </a>
       </div>
       <div class="navbar-inner">
@@ -57,20 +67,24 @@
               </a>
             </li>
 
-
+            <hr class="sidebar-divider">
+<div class="sidebar-heading">
+ Products
+</div>
             <div class="dropdown">
             <div class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <i class="ni ni-bullet-list-67 text-default"></i>
-            Create Category
+            Product
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li class="nav-item"><a class="dropdown-item" href="#">Create Category</a></li>
+            <li class="nav-item"><a class="dropdown-item" href="createcategory.php">Create Category</a></li>
             <li class="nav-item"><a class="dropdown-item" href="addproduct.php">Add Product</a></li>
             <li class="nav-item"><a class="dropdown-item" href="#">View Products</a></li>
             <li class="nav-item"><a class="dropdown-item" href="#">Create New Offers</a></li>
             </div>
             </div>
+
 
             <div class="dropdown">
             <div class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
@@ -86,10 +100,15 @@
             </div>
             </div>
             
+
+            <hr class="sidebar-divider">
+<div class="sidebar-heading">
+ Services List
+</div>
             <div class="dropdown">
             <div class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="ni ni-planet text-orange"></i>
+            <i class="fa fa-briefcase text-blue"></i>
             Services
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -98,10 +117,15 @@
             </div>
             </div>
 
+
+            <hr class="sidebar-divider">
+<div class="sidebar-heading">
+User List
+</div>
             <div class="dropdown">
             <div class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="ni ni-single-02 text-yellow"></i>
+            <i class="fa fa-users text-yellow"></i>
             Users
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -110,10 +134,15 @@
             </div>
             </div>
 
+
+            <hr class="sidebar-divider">
+<div class="sidebar-heading">
+ Blogs
+</div>
             <div class="dropdown">
             <div class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="ni ni-planet text-orange"></i>
+            <i class="fa fa-rss text-green"></i>
             Blog
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -122,10 +151,14 @@
             </div>
             </div>
 
+            <hr class="sidebar-divider">
+<div class="sidebar-heading">
+   Account Settings
+</div>
             <div class="dropdown">
             <div class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="ni ni-planet text-orange"></i>
+            <i class="fa fa-cogs text-purple"></i>
             Accounts
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -343,7 +376,7 @@
                     <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
                   </span>
                                 <div class="media-body  ml-2  d-none d-lg-block">
-                                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['username']; ?></span>
                                 </div>
                             </div>
                         </a>
@@ -368,7 +401,7 @@
                                 <span>Support</span>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#!" class="dropdown-item">
+                            <a href="../logout.php" class="dropdown-item">
                                 <i class="ni ni-user-run"></i>
                                 <span>Logout</span>
                             </a>

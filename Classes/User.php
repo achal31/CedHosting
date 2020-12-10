@@ -1,7 +1,7 @@
 <?php
-// session_start();
+//session_start();
 
-include('Dbcon.php');
+include_once('Dbcon.php');
 class User
 {
     
@@ -61,13 +61,18 @@ class User
         $useravailable=mysqli_num_rows($userlogincheck);
         if($useravailable=='1')
         {
-            
-            if($userdata['active']=='0')
+            if($userdata['is_admin']=='1')
+            {   $_SESSION['usertype']='1';
+                $_SESSION['username']=$userdata['name'];
+                echo "<script>window.location.href='admin/dashboard.php'</script>";
+            }
+            else if($userdata['active']=='0' && $userdata['is_admin']=='0')
             {
                 $ency_email=md5($email);
                 echo "<script>window.location.href='userverification.php?static=$ency_email'</script>";
             }
-            else {
+            else if($userdata['active']=='1' && $userdata['is_admin']=='0') {
+                $_SESSION['usertype']='0';
                 $_SESSION['username']=$userdata['name'];
                 echo "<script>window.location.href='index.php'</script>";
             }
@@ -94,13 +99,20 @@ class User
         }
     }
 
-    public function userverify($data)
+    public function userverify($data,$type)
     {
-        $userlogincheck= mysqli_query($this->dbh, "SELECT * FROM tbl_user");
-        $userdata = mysqli_fetch_assoc($userlogincheck);
-        if($data==md5($userdata['email']))
+        switch($type)
         {
-        $userlogincheck= mysqli_query($this->dbh, "UPDATE tbl_user SET `active`='1' ,`email_approved`='1' WHERE `email`='$userdata[email]'");
+            case 1: $userlogincheck= mysqli_query($this->dbh, "SELECT * FROM tbl_user");
+            $userdata = mysqli_fetch_assoc($userlogincheck);
+            if($data==md5($userdata['email']))
+            {
+            $userlogincheck= mysqli_query($this->dbh, "UPDATE tbl_user SET `active`='1' ,`email_approved`='1' WHERE `email`='$userdata[email]'");
+            } break;
+
+            case 2: $userlogincheck= mysqli_query($this->dbh, "UPDATE tbl_user SET `active`='1' ,`phone_approved`='1' WHERE `email`='$data'");
+        break;
         }
-    }
+        }
+       
 }

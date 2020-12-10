@@ -1,0 +1,28 @@
+/*------------NAVBAR DIVIDER AND HEADER-----------------*/
+
+.sidebar-divider {
+    border-top: 1px solid black;
+    margin: 0 1rem 1rem;
+}
+
+.sidebar-heading {
+    text-transform: uppercase !important;
+    text-align: center;
+    padding: 0 1rem;
+    font-weight: 800;
+    font-size: 0.65rem;
+    text-align: left;
+    color: cadetblue;
+}
+
+
+/*----------ADD PRODUCT PAGE BUTTON--------------------------*/
+
+#button-addon1 {
+    background-color: #5E72E4 !important;
+    color: white !important;
+}
+
+.dimension {
+    width: 180px !important;
+}

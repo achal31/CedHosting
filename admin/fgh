@@ -1,0 +1,40 @@
+ <div class="container-fluid mt--6">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header bg-transparent">
+                            <h3 class="mb-0">Icons</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="addproduct.php" method="POST">
+                                <h3 class="mb-0 text-white">SELECT CATEGORY</h3>
+
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" id="inputGroupSelect01" name="selectedcategory">
+                        <?php 
+                        $sql = $category->getcategory('0');
+                            if($sql=='0')
+                            {
+                                echo "No Category Available";
+                            }else{
+                                foreach($sql as $showcategory)
+                                {
+                                echo "<option value=".$showcategory['id'].">$showcategory[prod_name]</option>";
+                                }
+                            }
+                        ?>
+                        </select>
+                                </div>
+                                <h3 class="mb-0 text-white">ADD SUB CATEGORY</h3>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="subcategory" placeholder="Enter A Sub Category" required>
+                                    <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" required>
+                                    <div class="input-group-prepend">
+                                        <input type="submit" class="btn" id="button-addon1" name="addsubcategory" value="SAVE SUB CATEGORY">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
