@@ -13,6 +13,16 @@ if(isset($_SESSION['usertype']))
 include('header.php');
 include_once ('../Classes/Product.php'); 
 $category = new Product();
+/*-----------------TO DELETE THE SELECTED SUB-CATEGORY-----------------------*/
+if(isset($_GET['delete']))
+{
+    $table=$_GET['table'];
+    $subcategoryid=$_GET['id'];
+    $category->deleteitem($table,$subcategoryid);
+}
+
+/*-----------------INSERTING SUBCATEGORY INSIDE THE DATABASE------------------*/
+
 if(isset($_POST['addsubcategory']))
 {
     $subcategory=$_POST['subcategory'];
@@ -21,7 +31,20 @@ if(isset($_POST['addsubcategory']))
     $sql = $category->addsubcategory($subcategory,$selectedcategory,$categoryhref);
     if($sql=='1')
     {
-        echo"<script>alert('Sub Category Added');</script>";
+       $message="<div class='alert alert-success alert-dismissible fade show' role='alert' id='errormsg'>
+       <strong id='alertcontent'>The SubCategory Has Been Added Successfully!!</strong>
+       <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+         <span aria-hidden='true'>&times;</span>
+       </button>
+     </div>";
+    }
+    else {
+        $message="<div class='alert alert-danger alert-dismissible fade show' role='alert' id='errormsg'>
+<strong id='alertcontent'>The SubCategory Already Exist!!</strong>
+<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+  <span aria-hidden='true'>&times;</span>
+</button>
+</div>";
     }
 }
 ?>
@@ -56,6 +79,28 @@ if(isset($_POST['addsubcategory']))
                             <h3 class="mb-0">SUB-CATEGORY</h3>
                         </div>
                         <div class="card-body">
+
+         <?php if(isset($_POST['addsubcategory']))
+         {
+            echo $message;
+         }else if(isset($_GET['delete']))
+         {
+echo "<div class='alert alert-danger alert-dismissible fade show' role='alert' id='errormsg'>
+<strong id='alertcontent'>The SubCategory Has Been Deleted Successfully!!!</strong>
+<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+  <span aria-hidden='true'>&times;</span>
+</button>
+</div>";
+         }
+         else if(isset($_GET['static']))
+                            {
+                                echo "  <div class='alert alert-success alert-dismissible fade show' role='alert' id='errormsg'>
+    <strong id='alertcontent'>The SubCategory Has Been Updated Successfully!!!</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+  </div>";
+                           }?> 
                             <form method="POST">
                                 <h3 class="mb-0 text-dark">SELECT CATEGORY</h3>
 
@@ -84,13 +129,15 @@ if(isset($_POST['addsubcategory']))
                                     </div>
                                 </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
                         <div class="card-header bg-transparent">
-                            <h3 class="mb-0">Icons</h3>
+                            <h3 class="mb-0">SUB CATEGORY LIST</h3>
                         </div>
                         <div class="card-body">
                         <div class="table-responsive">
@@ -138,13 +185,37 @@ if(isset($_POST['addsubcategory']))
                                            </span></td>";
                             }
                             echo"<td>$result[prod_launch_date]</td>";
-                            echo "<td><button type='button' class='btn btn-warning'>EDIT</button>
-                                   <button type='button' class='btn btn-danger'>DELETE</button></td>";
+                            echo "<td><button type='button' class='btn btn-warning'><a class='text-white' href='editcategory.php?edit=1&id=$result[id]'>EDIT</a></button>
+                            <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>DELETE</button>
+                          </td>";
                             echo "</tr>";
                             $i++;
-                        }
+                            ?>
+                       
+                   <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">CONFIRMATION</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ARE YOU SURE YOU WANT TO DELETE THE SUBCATEGORY
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+        <button type='button' class='btn btn-danger'><a class='text-white' href='createcategory.php?delete=1&table=tbl_product&id=<?php echo $result['id'] ?>'>DELETE</a></button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php
+}
                     }
-                   ?>
+                   ?> 
                             </tbody>
                         </table>
                     </div>
@@ -153,8 +224,7 @@ if(isset($_POST['addsubcategory']))
                 </div>
             </div>
 <?php include('footer.php'); ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+
 <script>
 $(document).ready(function() {
     $('#subcategorytable').DataTable();

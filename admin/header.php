@@ -1,3 +1,16 @@
+<?php 
+ if (!isset($_SESSION))
+{
+    session_start();
+
+}
+
+if (!isset($_SESSION['username'])) {
+    header('location:../index.php');
+} else if ($_SESSION['usertype'] == '0') {
+    header("location:../index.php");
+}
+?>
  <!--
 =========================================================
 * Argon Dashboard - v1.2.0
@@ -42,7 +55,11 @@
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="assets/css/argon.css?v=1.2.0" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+<script src="script.js"></script>
 </head>
 
 <body>

@@ -49,6 +49,7 @@ class Product
         $returncategory= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,link,prod_available,prod_launch_date) VALUES('$selectedcategory','$subcategory','$categoryhref','1',now())");
       return 1;
         }
+        return 0;
     }
 
     /*---------------------FUNCTION TO GET THE SUBCATEGORY OF THE CATEGORY-----------------------*/
@@ -70,6 +71,24 @@ class Product
         {
             return 0;
         }
+        }
+    }
+
+    /*---------------------------FUNCTION TO DELETE THE SUBCATEGORY---------------------------------*/
+    public function deleteitem($table,$itemid)
+    {
+        $deletesubcategory=mysqli_query($this->dbh, "DELETE FROM `$table` where `id`='$itemid'");
+    }
+
+    /*--------------------------FUNCTION USED TO UPDATE THE SUBCATEGORY VALUES---------------------*/
+    public function updatesubcategory($id,$name,$href,$status)
+    {
+        $updatesubcategory=mysqli_query($this->dbh, "UPDATE tbl_product SET `prod_name`='$name',`link`='$href',`prod_available`='$status' WHERE `id`='$id'");
+        if($updatesubcategory)
+        {
+            return 1;
+        }else {
+        return 0;
         }
     }
 }
