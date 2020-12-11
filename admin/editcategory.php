@@ -1,33 +1,37 @@
-<?php include('header.php');
-include_once ('../Classes/Product.php'); 
-$category = new Product(); 
-$message="";
-if(isset($_POST['updatesubcategory']))
+<?php include ('header.php');
+include_once ('../Classes/Product.php');
+$category = new Product();
+$message = "";
+if (isset($_POST['updatesubcategory']))
 {
-    $subcategoryid=$_POST['id'];
-    $subcategory=$_POST['subcategory'];
-    $subcategoryhref=$_POST['subcategoryhref'];
-    if(isset($_POST['check']))
+    $subcategoryid = $_POST['id'];
+    $subcategory = $_POST['subcategory'];
+    $subcategoryhref = $_POST['subcategoryhref'];
+    if (isset($_POST['check']))
     {
-        $available='1';
-    }else{
-        $available='0';
+        $available = '1';
     }
-   
-  $alert=$category->updatesubcategory($subcategoryid,$subcategory,$subcategoryhref,$available);
-   if($alert=='1')
-   {
+    else
+    {
+        $available = '0';
+    }
+
+    $alert = $category->updatesubcategory($subcategoryid, $subcategory, $subcategoryhref, $available);
+    if ($alert == '1')
+    {
 ?>
  <script>window.location.href='createcategory.php?static=1'</script>";
-  <?php 
-   }else {
-    $message="<div class='alert alert-warning alert-dismissible fade show' role='alert' id='errormsg'>
+  <?php
+    }
+    else
+    {
+        $message = "<div class='alert alert-warning alert-dismissible fade show' role='alert' id='errormsg'>
        <strong id='alertcontent'>Sub Category Already Exist</strong>
        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
          <span aria-hidden='true'>&times;</span>
        </button>
      </div>";
-   }
+    }
 }
 ?>
 <!-- Header -->
@@ -65,35 +69,55 @@ if(isset($_POST['updatesubcategory']))
                         <div class="card-body">
                         <form method="POST">
                         <?php
-                        if(isset($_GET['edit']))
-                        {
-                            $subcategoryid=$_GET['id'];
-                            $sql=$category->getcategory($subcategoryid);
-                        if($sql=='0')
-                        {
-                            echo "No Data Available";
-                        }
-                        else {
-                            foreach($sql as $fetchsubcategory)
-                            {
+if (isset($_GET['edit']))
+{
+    $subcategoryid = $_GET['id'];
+    $sql = $category->getcategory($subcategoryid);
+    if ($sql == '0')
+    {
+        echo "No Data Available";
+    }
+    else
+    {
+        foreach ($sql as $fetchsubcategory)
+        {
 
-                           
-                        ?>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="subcategory" placeholder="Enter A Sub Category" value="<?php echo $fetchsubcategory['prod_name']; ?>" required>
-                                    <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" value="<?php echo $fetchsubcategory['link']; ?>" required>
+?>
+                                
+                                <div class="input-group flex-nowrap mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-blue text-white dimension" id="addon-wrapping">Sub Category Name<span class="text-red">*</span></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="subcategory" placeholder="Enter A Sub Category" value="<?php echo $fetchsubcategory['prod_name']; ?>" required>
+                                    </div>
+                                    <div class="input-group flex-nowrap mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-blue text-white dimension" id="addon-wrapping">Sub Category Href<span class="text-red">*</span></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" value="<?php echo $fetchsubcategory['link']; ?>" required>
+                                    </div>
+                                    <h6 class="form-control-label">Product Availability</h6>
+                                    
+                                <label class="custom-toggle">
+                                <input type="checkbox" name="check" id="check" <?php if ($fetchsubcategory['prod_available'] == '1')
+            {
+                echo "checked";
+            } ?> >
+                                <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
+                                </label>
+                                  
+                            
+                               
                                     <input type="hidden" name="id" value="<?php echo $fetchsubcategory['id'] ?>">
                                     <div class="input-group-prepend">
                                     <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>UPDATE SUB CATEGORY</button>
                                     </div>
-                                </div>
-                                <label class="form-control-label">Product Availability</label><br>
-                                <label class="custom-toggle">
-                                <input type="checkbox" name="check" id="check" <?php if($fetchsubcategory['prod_available']=='1'){echo "checked";}?> >
-                                <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
-                                </label>
-                            
-                                <?php }}}?>
+                                
+                                
+                                <?php
+        }
+    }
+} ?>
 
                                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -115,7 +139,7 @@ if(isset($_POST['updatesubcategory']))
   </div>
 </div>
                             </form>
-                            <?php echo $message?>
+                            <?php echo $message ?>
                             </div>
                         </div>
                 
@@ -123,4 +147,4 @@ if(isset($_POST['updatesubcategory']))
         </div>
     </div>
     <!-- Footer -->
- <?php include('footer.php'); ?>
+ <?php include ('footer.php'); ?>

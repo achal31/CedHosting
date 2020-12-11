@@ -16,9 +16,8 @@ $category = new Product();
 /*-----------------TO DELETE THE SELECTED SUB-CATEGORY-----------------------*/
 if(isset($_GET['delete']))
 {
-    $table=$_GET['table'];
     $subcategoryid=$_GET['id'];
-    $category->deleteitem($table,$subcategoryid);
+$category->deleteitem($subcategoryid);
 }
 
 /*-----------------INSERTING SUBCATEGORY INSIDE THE DATABASE------------------*/
@@ -57,7 +56,7 @@ if(isset($_POST['addsubcategory']))
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                     <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                                    <li class="breadcrumb-item"><a href="#">COMPONENTS</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Product</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Create Sub-Category</li>
                                 </ol>
                             </nav>
@@ -186,14 +185,14 @@ echo "<div class='alert alert-danger alert-dismissible fade show' role='alert' i
                             }
                             echo"<td>$result[prod_launch_date]</td>";
                             echo "<td><button type='button' class='btn btn-warning'><a class='text-white' href='editcategory.php?edit=1&id=$result[id]'>EDIT</a></button>
-                            <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>DELETE</button>
+                            <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter$result[id]'>DELETE</button>
                           </td>";
                             echo "</tr>";
                             $i++;
                             ?>
                        
                    <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter<?php echo $result['id']?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -207,7 +206,7 @@ echo "<div class='alert alert-danger alert-dismissible fade show' role='alert' i
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-        <button type='button' class='btn btn-danger'><a class='text-white' href='createcategory.php?delete=1&table=tbl_product&id=<?php echo $result['id'] ?>'>DELETE</a></button>
+        <button type='button' class='btn btn-danger'><a class='text-white' href='createcategory.php?delete=1&id=<?php echo $result['id'] ?>'>DELETE</a></button>
       </div>
     </div>
   </div>

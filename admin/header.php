@@ -97,7 +97,7 @@ if (!isset($_SESSION['username'])) {
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li class="nav-item"><a class="dropdown-item" href="createcategory.php">Create Category</a></li>
             <li class="nav-item"><a class="dropdown-item" href="addproduct.php">Add Product</a></li>
-            <li class="nav-item"><a class="dropdown-item" href="#">View Products</a></li>
+            <li class="nav-item"><a class="dropdown-item" href="viewproduct.php">View Products</a></li>
             <li class="nav-item"><a class="dropdown-item" href="#">Create New Offers</a></li>
             </div>
             </div>
