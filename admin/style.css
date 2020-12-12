@@ -26,3 +26,21 @@
 .dimension {
     width: 180px !important;
 }
+
+label.error {
+    color: red;
+    font-size: 10px;
+    display: block;
+    margin-top: 5px;
+}
+
+input.error {
+    border: 1px solid red;
+    font-weight: 300;
+    color: red;
+}
+
+input.valid.success-alert {
+    border: 1px solid #4CAF50;
+    color: green;
+}

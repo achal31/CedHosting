@@ -143,11 +143,11 @@ echo "<div class='alert alert-danger alert-dismissible fade show' role='alert' i
                         <table class="table align-items-center table-flush mx-auto" id="subcategorytable">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col" class="sort" data-sort="Category">Category</th>
-                                    <th scope="col" class="sort" data-sort="Sub Category">Sub Category</th>
-                                    <th scope="col" class="sort" data-sort="Status">Status</th>
-                                    <th scope="col" class="sort" data-sort="Launch Date">Launch Date</th>
-                                    <th scope="col" class="sort" data-sort="Action">Action</th>
+                                    <th scope="col" class="text-white" data-sort="Category">Category</th>
+                                    <th scope="col" class="text-white" data-sort="Sub Category">Sub Category</th>
+                                    <th scope="col" class="text-white" data-sort="Status">Status</th>
+                                    <th scope="col" class="text-white" data-sort="Launch Date">Launch Date</th>
+                                    <th scope="col" class="text-white" data-sort="Action">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="list">

@@ -78,8 +78,7 @@ class Product
     public function deleteitem($itemid)
     {
         $deletecategory=mysqli_query($this->dbh, "DELETE FROM `tbl_product` where `id`='$itemid'");
-
-        
+ 
     }
 
     /*--------------------------FUNCTION USED TO UPDATE THE SUBCATEGORY VALUES---------------------*/
@@ -103,6 +102,7 @@ class Product
     
     }
 
+    /*-----------------FUNCTION TO INSERT THE NEW PRODUCT IN THE DATABASE----------------------------------*/
     public function insertproduct($productsubcategoryid,$productname,$producturl,$productmonthlyprice,$productannualprice,$productsku,$feature_encode)
     {
         $instproduct= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,link,prod_available,prod_launch_date) VALUES('$productsubcategoryid','$productname','$producturl','1',now())");
@@ -123,9 +123,10 @@ class Product
         }
     }
 
+    /*---------------FUNCTION TO SHOW THE PRODUCT TABLE ON VIEW PRODUCT PAGE-----------------------------*/
     public function fetchproducttable()
     {
-        $sql=mysqli_query($this->dbh,"SELECT * FROM `tbl_product` WHERE `prod_parent_id`!=0 AND `prod_parent_id`!=1");
+        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id,prod_parent_id,prod_name,link,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id");
         if (mysqli_num_rows($sql) > 0)
         {
             return $sql;
@@ -134,5 +135,11 @@ class Product
         {
             return 0;
         }
+    }
+
+    /*--------------------FUNCTION TO DELETE THE PRODUCT FROM THE DATABASE----------------------------------------*/
+    public function deleteproduct($productid)
+    {
+        $deletecategory=mysqli_query($this->dbh, "DELETE tbl_product, tbl_product_description FROM tbl_product INNER JOIN tbl_product_description ON tbl_product.id=tbl_product_description.prod_id WHERE tbl_product.id='$productid'");
     }
 }
