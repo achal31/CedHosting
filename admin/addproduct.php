@@ -2,11 +2,12 @@
 include ('header.php');
 include_once ('../Classes/Product.php');
 $product = new Product();
-if(isset($_POST['createnewproduct']))
+
+if(isset($_POST['createnewproduct'])||isset($_POST['updatenewproduct']))
 {
     
     $productsubcategoryid=$_POST['parentcategory'];
-    $productname=$_POST['productname'];
+    $productname=$_POST['product_name'];
     if(isset($_POST['producturl']))
     {
         $producturl=$_POST['producturl'];
@@ -14,6 +15,14 @@ if(isset($_POST['createnewproduct']))
     else{
         $product="not found";
     }
+    if(isset($_POST['status']))
+    {
+      $status=1;
+    }
+    else{
+      $status=0;
+    }
+    $productstatus=$status;
     $productmonthlyprice=$_POST['monthlyprice'];
     $productannualprice=$_POST['annualprice'];
     $productsku=$_POST['sku'];
@@ -33,24 +42,26 @@ if(isset($_POST['createnewproduct']))
         
     );
     $feature_encode=json_encode($feature);
-$check=$product->insertproduct($productsubcategoryid,$productname,$producturl,$productmonthlyprice,$productannualprice,$productsku,$feature_encode);
-if($check==1)
-{
-    $message="<div class='alert alert-success alert-dismissible fade show' role='alert' id='errormsg'>
-    <strong id='alertcontent'>The product Has Been Added Successfully!!</strong>
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>&times;</span>
-    </button>
-  </div>";
-}
-else{
-    $message="<div class='alert alert-danger alert-dismissible fade show' role='alert' id='errormsg'>
-<strong id='alertcontent'>The Product Was Not Added!!</strong>
-<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-  <span aria-hidden='true'>&times;</span>
-</button>
-</div>";
-}
+    if(isset($_POST['createnewproduct']))
+    {
+      $check=$product->insertproduct($productsubcategoryid,$productname,$producturl, $productstatus,$productmonthlyprice,$productannualprice,$productsku,$feature_encode);
+      if($check==0)
+      {
+          $message="<div class='alert alert-danger alert-dismissible fade show' role='alert' id='errormsg'>
+      <strong id='alertcontent'>The Product Was Not Added!!</strong>
+      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+      </button>
+      </div>";
+      }
+    }
+    else{
+      $productid=$_POST['productid'];
+      echo $productid;
+    $product->updateproduct($productsubcategoryid,$productname,$producturl,$productstatus,$productmonthlyprice,$productannualprice,$productsku,$feature_encode,$productid);
+    }
+    
+
 }
 
 ?>
@@ -94,8 +105,40 @@ else{
 if(isset($_POST['createnewproduct'])){
 echo $message;
 }
+if(isset($_GET['edit']))
+{
+  
+$prod_id=$_GET['id'];
+$result=$product->fetchproducttoupdate($prod_id);
+foreach($result as $productdetail)
+{
+  $productstatus=$productdetail['prod_available'];
+  $productid=$productdetail['productid'];
+  $prodname=$productdetail['prod_name'];
+  $link=$productdetail['link'];
+  $monthlyprice=$productdetail['mon_price'];
+  $annualprice=$productdetail['annual_price'];
+  $productsku=$productdetail['sku'];
+
+/*-----------------JSON DECODED-------------------------*/
+$decoded=json_decode($productdetail['description']);
+$productweb=$decoded->productweb;
+$productfreedomain=$decoded->productfreedomain;
+$productbandwidth=$decoded->productbandwidth;
+$producttechnology=$decoded->producttechnology;
+$productmailbox=$decoded->productmailbox;
+}
+
+}
 ?>
                         <form role="form" id="formfield" action="addproduct.php" method="POST">
+                          <?php if(isset($_GET['edit']))
+{
+  ?>
+  <input type="hidden" value="<?php echo $_GET['id'] ?>" name="productid"?>
+<?php } ?>
+
+
                                     <div class="sidebar-heading">
                                         <h1>PRODUCT NAME</h1>
                                     </div>
@@ -118,24 +161,27 @@ else
 {
     foreach ($sql as $subcategory)
     {
-        echo "<option value=" . $subcategory['id'] . ">$subcategory[prod_name]</option>";
-    }
+      ?>
+
+        <option value="<?php echo $subcategory['id'] ?>" <?php if(isset($_GET['edit'])){ if($subcategory['id']==$productid) { echo "selected";}} ?> ><?php echo $subcategory['prod_name']; ?></option>";
+   
+   <?php    }
 }
 ?>
 </select>
                                    
 
                                 
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                             <span class="text-dark" id="addon-wrapping">Product Name<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Product Name" id="product_name" name="product_name" required>
+                                        <input type="text" class="form-control" placeholder="Enter Product Name" value="<?php if(isset($_GET['edit'])){ echo $prodname; }?>" id="product_name" name="product_name" required>
 
                    
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                             <span class="text-dark" id="addon-wrapping">Page URL</span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Page URL" name="producturl" required>
+                                        <input type="url" class="form-control" placeholder="Enter Page URL" value="<?php if(isset($_GET['edit'])){ echo $link; } ?>" name="producturl" required>
                                   
 
                                     <div class="sidebar-heading">
@@ -145,23 +191,23 @@ else
 
 
                                    
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                             <span class="text-dark" id="addon-wrapping">Monthly Price<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Monthly Price" name="monthlyprice">
+                                        <input type="text" class="form-control" placeholder="Enter Monthly Price" value="<?php if(isset($_GET['edit'])){ echo $monthlyprice; }?>"  name="monthlyprice">
                                   
 
                  
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                         <span class="text-dark" id="addon-wrapping">Annual Price<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Annual Price" name="annualprice" required>
+                                        <input type="text" class="form-control" placeholder="Enter Annual Price" value="<?php if(isset($_GET['edit'])){ echo $annualprice; }?>" name="annualprice" required>
                        
 
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                         <span class="text-dark" id="addon-wrapping">SKU<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter SKU" name="sku" required>
+                                        <input type="text" class="form-control" placeholder="Enter SKU" value="<?php if(isset($_GET['edit'])){ echo $productsku; }?>" name="sku" required>
                             
 
 
@@ -173,38 +219,52 @@ else
 
 
                                   
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                         <span class="text-dark" id="addon-wrapping">Web Space(in GB)<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter 0.5 for 512 MB" name="webspace" required>
+                                        <input type="text" class="form-control" placeholder="Enter 0.5 for 512 MB" name="webspace"  value="<?php if(isset($_GET['edit'])){ echo $productweb; }?>" required>
                                
 
                                  
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                         <span class="text-dark" id="addon-wrapping">Free Domain<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter 0 if No Domain Available in the service" name="freedomain" required>
+                                        <input type="text" class="form-control" placeholder="Enter 0 if No Domain Available in the service" name="freedomain"  value="<?php if(isset($_GET['edit'])){ echo $productfreedomain; }?>"  required>
                   
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                         <span class="text-dark" id="addon-wrapping">BandWidth(in GB)<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter 0.5 for 512 MB" name="bandwidth" required>
+                                        <input type="text" class="form-control" placeholder="Enter 0.5 for 512 MB" name="bandwidth"  value="<?php if(isset($_GET['edit'])){ echo $productbandwidth; }?>" required>
                     
 
                                     
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                         <span class="text-dark" id="addon-wrapping">Technology Support<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter BandWidth Space" name="technology" required>
+                                        <input type="text" class="form-control" placeholder="Enter BandWidth Space" name="technology"  value="<?php if(isset($_GET['edit'])){ echo $producttechnology; }?>" required>
                                     
 
                 
-                                        <div class="input-group-prepend">
+                                        <div class="input-group-prepend mt-2">
                                         <span class="text-dark" id="addon-wrapping">MailBox<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Number of mailbox will be provided, enter 0 if none" name="mailbox" required>
-                                   
-                                    <input type="submit" value="YES" id="submit" name="createnewproduct"  class="btn btn-default" />
+                                        <input type="text" class="form-control" placeholder="Enter Number of mailbox will be provided, enter 0 if none" name="mailbox"  value="<?php if(isset($_GET['edit'])){ echo $productmailbox; }?>" required>
+                                        <div class="input-group-prepend mt-2">
+                                       
+                                        <label class="custom-toggle">
+                                <input type="checkbox" name="status" id="check" <?php if(isset($_GET['edit'])){ if($productstatus=='1'){ echo "checked"; }} ?>>
+         
+                                <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
+                                </label>
+                                        </div>
+
+                                        <?php if(isset($_GET['edit']))
+                                        {  ?>
+                                          <input type="button" value="Update The Product" id="Updatebtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-warning mt-2" disabled/>
+                                        <?php 
+                                        } else { ?>
+                                        <input type="button" value="Create New Product" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-success mt-2" disabled/>
+                                        <?php } ?>
                                     
                                     <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -218,7 +278,13 @@ else
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <input type="button" name="btn" value="Submit" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-default" />
+                <?php if(isset($_GET['edit']))
+                                        {  ?>
+                        <input type="submit" value="YES" id="submit" name="updatenewproduct"  class="btn btn-default"/>
+                                        <?php } else { ?>                
+                <input type="submit" value="YES" id="submit" name="createnewproduct"  class="btn btn-default"/>
+                                        <?php } ?>
+                
             </div>
         </div>
     </div>
@@ -243,12 +309,37 @@ else
 
 
 $(document).ready(function() {
+  $('#Updatebtn').removeAttr('disabled'); 
+  (function() {
+    $('form > input[type=text]').on('blur',function() {
 
+        var empty = false;
+        $('form > input[type=text]').each(function() {
+            if ($(this).val() == '') {
+                empty = true;
+            }
+        });
 
+        if (empty) {
+              
+          $('#Updatebtn').attr('disabled', 'disabled');
+            $('#submitBtn').attr('disabled', 'disabled');
+        } else {
+          if ($("#formfield").valid()) {
+            $('#Updatebtn').removeAttr('disabled'); 
+            $('#submitBtn').removeAttr('disabled'); 
+          }
+        }
+    });
+})()
 
     $("#formfield").validate({
         errorClass: "error fail-alert",
     validClass: "valid success-alert",
+    onfocusout:function(element)
+    {
+      this.element(element);
+    },
     rules: {
         parentcategory:{
             required: true,
@@ -259,7 +350,7 @@ $(document).ready(function() {
         name:true,
       },
       producturl: {
-        required: true,
+        required: false,
         name:false,
       },
       monthlyprice: {
@@ -294,6 +385,7 @@ $(document).ready(function() {
       technology: {
         required: true,
         name:false,
+        technology:true,
       },
       mailbox: {
         required: true,
@@ -310,9 +402,6 @@ $(document).ready(function() {
     messages : {
         product_name : {
         required: "Please Enter the Product Name",
-      },
-      producturl: {
-        required: "Please Enter Product Url",
       },
       monthlyprice: {
         required: "Please Enter Monthly Price",
@@ -349,7 +438,7 @@ $(document).ready(function() {
     }
   });
   $.validator.addMethod("name",function(value,element){
-        return this.optional(element) || /^[a-zA-Z]+$/.test(value);
+        return this.optional(element) || /^[a-zA-Z0-9]*[-\s]?[a-zA-Z]+[-\s]?[0-9]*(([a-zA-Z0-9]*[-\s]?[a-zA-Z]+[-\s]?[0-9]*)+)*$/.test(value);
     },"Enter Product Name that should start with alphabet");
     $.validator.addMethod("sku",function(value,element){
         return this.optional(element) || /^[a-zA-Z0-9#](?:[a-zA-Z0-9_-]*[a-zA-Z0-9])?$/.test(value);
@@ -358,29 +447,15 @@ $(document).ready(function() {
     $.validator.addMethod("check",function(value,element){
         return this.optional(element) || /((^[0-9]*$)|(^[A-Za-z]+$))/.test(value);
     },"Enter Value That is only Numeric or Only Alphabetic");
- 
+
+    $.validator.addMethod("technology",function(value,element){
+        return this.optional(element) || /(^[a-zA-Z0-9]*[a-zA-Z]+[0-9]*(,?([a-zA-Z0-9]*[a-zA-Z]+[0-9]*)+)*$)/.test(value);
+    },"Enter Value That is only Numeric or Only Alphabetic");
+
+   
 });
 
 
-//     $(document).ready(function(){
-
-//         $("#formfield-form").validate({
-// rules: {
-//     productname : {
-// required: true,
-// },
-
-// },
-// messages : {
-//     productname: {
-//         required: "Name should be at least 3 characters"
-// },
-// }
-// });
-
-//         $('#submit').click(function(){
-//     $('#formfield').submit();
-// });
-
+  
  
 </script>

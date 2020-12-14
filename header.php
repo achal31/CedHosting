@@ -70,7 +70,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <ul class="nav navbar-nav">
                             <li <?php if($activePage == "index.php")echo 'class="active"'; ?> ><a href="index.php">Home <i class="sr-only">(current)</i></a></li>
                             <li <?php if($activePage == "about.php")echo 'class="active"'; ?> ><a href="about.php">About</a></li>
-                            <li <?php if($activePage == "products.php")echo 'class="active"'; ?> ><a href="#">Services</a></li>
+                            <li <?php if($activePage == "services.php")echo 'class="active"'; ?> ><a href="services.php">Services</a></li>
                             <li class="dropdown <?php if (in_array($activePage, $pages)):?>active<?php endif; ?>">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
@@ -84,13 +84,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                     else {
                                                         foreach($sql as $subcategory)
                                                         {
-                                                            echo"<li><a href='$subcategory[link]'>$subcategory[prod_name]</a></li>";
+                                                            ?>
+                                                            <li><a href='<?php echo $subcategory['link'].'?id='.$subcategory['id']; ?>' ><?php echo $subcategory['prod_name']; ?></a></li>
+                                                            <?php
                                                         }
                                                     }
                                                         ?>
 									</ul>			
 								</li>
-                            <li <?php if($activePage == "services.php")echo 'class="active"'; ?> ><a href="services.php">Pricing</a></li>
+                            <li <?php if($activePage == "portfolio.php")echo 'class="active"'; ?> ><a href="portfolio.php">Pricing</a></li>
                             <li <?php if($activePage == "blog.php")echo 'class="active"'; ?> ><a href="blog.php">blog</a></li>
                             <li <?php if($activePage == "contact.php")echo 'class="active"'; ?> ><a href="contact.php">Contact</a></li>
                             <li <?php if($activePage == "codes.php")echo 'class="active"'; ?> ><a href="codes.php"><i class="fa fa-shopping-cart" style="font-size:22px;color:#E6653D"></i></a></li>

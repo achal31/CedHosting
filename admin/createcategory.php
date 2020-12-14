@@ -121,7 +121,7 @@ echo "<div class='alert alert-danger alert-dismissible fade show' role='alert' i
                                 </div>
                                 <h3 class="mb-0 text-dark">ADD SUB CATEGORY</h3>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="subcategory" placeholder="Enter A Sub Category" required>
+                                    <input type="text" class="form-control" name="subcategory" pattern='^[a-zA-Z\s]*[a-zA-Z]+[.a-zA-Z0-9\-]*$' placeholder="Enter A Sub Category" required>
                                     <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" required>
                                     <div class="input-group-prepend">
                                         <input type="submit" class="btn" id="button-addon1" name="addsubcategory" value="SAVE SUB CATEGORY">

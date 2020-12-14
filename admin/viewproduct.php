@@ -7,6 +7,23 @@ if(isset($_GET['delete']))
   $productid=$_GET['id'];
   $result=$category->deleteproduct($productid);
 }
+else if(isset($_GET['productupdate'])){
+  $message="<div class='alert alert-success alert-dismissible fade show' role='alert' id='errormsg'>
+  <strong id='alertcontent'>The product Has Been Updated Successfully!!</strong>
+  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span>
+  </button>
+</div>";
+}
+else if(isset($_GET['productadded']))
+{
+  $message="<div class='alert alert-success alert-dismissible fade show' role='alert' id='errormsg'>
+  <strong id='alertcontent'>The product Has Been Added Successfully!!</strong>
+  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span>
+  </button>
+</div>";
+}
 ?>
 <!-- Header -->
 <!-- Header -->
@@ -50,6 +67,10 @@ if(isset($_GET['delete']))
   <span aria-hidden='true'>&times;</span>
 </button>
 </div>";
+} else  if(isset($_GET['productupdate'])){
+  echo $message;
+} else if(isset($_GET['productadded']))
+{ echo $message;
 }
 ?>
                         <div class="table-responsive">
@@ -65,13 +86,18 @@ if(isset($_GET['delete']))
                                     <th scope="col" class="text-white" data-sort="Bandwidth">Bandwidth</th>
                                     <th scope="col" class="text-white" data-sort="Product SKU">Product SKU</th>
                                     <th scope="col" class="text-white" data-sort="Technology">Technology</th>
-                                    <th scope="col" class="text-white" data-sort="Mail Box">Mail Box</th>                             
-                                   <th scope="col" class="text-white" data-sort="Action">Action</th>
+                                    <th scope="col" class="text-white" data-sort="Mail Box">Mail Box</th>    
+                                    <th scope="col" class="text-white" data-sort="Mail Box">Status</th>    
+                                    <th scope="col" class="text-white" data-sort="Action">Action</th>
                         
                                 </tr>
                             </thead>
                             <tbody class="list">
                                 <?php $fetchitem=$category->fetchproducttable();
+                                if($fetchitem=='0')
+                                {
+                                  echo "No Data Available";
+                                }else{
                                 foreach($fetchitem as $product)
                                 {
                                   echo"<tr>";
@@ -98,8 +124,23 @@ if(isset($_GET['delete']))
                              echo "<td> $productbandwidth</td>";
                              echo "<td> $producttechnology</td>";
                              echo "<td> $productmailbox</td>";
+                             if($product['prod_available']=='1')
+                             {
+                              echo "<td><span class='badge badge-dot mr-4'>
+                              <i class='bg-success'></i>
+                              <span class='status'>Available</span>
+                                          </span></td>";
+                             }
+                             else {
+                               echo"<td><span class='badge badge-dot mr-4'>
+                               <i class='bg-warning'></i>
+                               <span class='status'>Unvailable</span>
+                                           </span></td>";
+                             }
                      
-                            echo "<td><button type='button' class='btn btn-warning'><a class='text-white' href='editcategory.php?edit=1&id=$product[prod_id]'>EDIT</a></button>
+                           
+                     
+                            echo "<td><button type='button' class='btn btn-warning'><a class='text-white' href='addproduct.php?edit=1&id=$product[prod_id]'>EDIT</a></button>
                             <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter$product[prod_id]'>DELETE</button>
                             </td>";
                                 echo"</tr>";
@@ -118,16 +159,16 @@ if(isset($_GET['delete']))
         </button>
       </div>
       <div class="modal-body">
-        ARE YOU SURE YOU WANT TO DELETE THE SUBCATEGORY
+        ARE YOU SURE YOU WANT TO DELETE THE PRODUCT?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-        <button type='button' class='btn btn-danger'><a class='text-white' href='viewproduct.php?delete=1&id=<?php echo $product['prod_id'] ?>'>DELETE</a></button>
+        <button type='button' class='btn btn-danger'><a class='text-white' href='viewproduct.php?delete=1&id=<?php echo $product['prod_id'] ?>'>YES</a></button>
       </div>
     </div>
   </div>
 </div>
-<?php  } ?>
+<?php  } }?>
                             </tbody>
                         </table>
                         </div>

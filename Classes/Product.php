@@ -103,16 +103,16 @@ class Product
     }
 
     /*-----------------FUNCTION TO INSERT THE NEW PRODUCT IN THE DATABASE----------------------------------*/
-    public function insertproduct($productsubcategoryid,$productname,$producturl,$productmonthlyprice,$productannualprice,$productsku,$feature_encode)
+    public function insertproduct($productsubcategoryid,$productname,$producturl,$productstatus,$productmonthlyprice,$productannualprice,$productsku,$feature_encode)
     {
-        $instproduct= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,link,prod_available,prod_launch_date) VALUES('$productsubcategoryid','$productname','$producturl','1',now())");
+        $instproduct= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,link,prod_available,prod_launch_date) VALUES('$productsubcategoryid','$productname','$producturl','$productstatus',now())");
         $last_id = mysqli_insert_id($this->dbh);
         if($instproduct)
         {
             $instproductdetail= mysqli_query($this->dbh, "INSERT INTO `tbl_product_description`(`prod_id`,`description`,`mon_price`,`annual_price`,`sku`) VALUES('$last_id','$feature_encode','$productmonthlyprice','$productannualprice','$productsku')");
             if($instproductdetail)
             {
-                return 1;
+                echo "<script>window.location.href='viewproduct.php?productadded=1'</script>";
             }
             else {
                return 0;
@@ -141,5 +141,42 @@ class Product
     public function deleteproduct($productid)
     {
         $deletecategory=mysqli_query($this->dbh, "DELETE tbl_product, tbl_product_description FROM tbl_product INNER JOIN tbl_product_description ON tbl_product.id=tbl_product_description.prod_id WHERE tbl_product.id='$productid'");
+    }
+
+    /*-------------------FUNCTION TO SHOW PRODUCT TO THE USER,THAT HE WANT TO EDIT-----------------------*/
+    public function fetchproducttoupdate($productid)
+    {
+        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id,prod_parent_id as productid,prod_name,link,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id WHERE tbl_product.id='$productid'");
+        if (mysqli_num_rows($sql) > 0)
+        {
+            return $sql;
+        }
+        else
+        {
+            return 0;
+        } 
+    }
+
+    public function updateproduct($productsubcategoryid,$productname,$producturl,$productstatus,$productmonthlyprice,$productannualprice,$productsku,$feature_encode,$prod_id)
+    {
+        $sql=mysqli_query($this->dbh,"UPDATE tbl_product_description as td INNER JOIN tbl_product as tp ON td.prod_id = tp.id SET
+tp.prod_name = '$productname', tp.prod_parent_id ='$productsubcategoryid',tp.link = '$producturl',tp.prod_available ='$productstatus',
+td.description = '$feature_encode', td.mon_price ='$productmonthlyprice',td.annual_price ='$productannualprice',td.sku ='$productsku' WHERE tp.id='$prod_id'");
+
+    echo "<script>window.location.href='viewproduct.php?productupdate=1'</script>";
+}
+
+/*--------------------SHOWING DYNAMIC DATA TO THE USER ON THE USER PANEL-------------------------------------*/
+public function showdynamicdata($productid)
+    {
+        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id,prod_parent_id,prod_name,link,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id WHERE tbl_product.prod_parent_id='$productid'");
+        if (mysqli_num_rows($sql) > 0)
+        {
+            return $sql;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

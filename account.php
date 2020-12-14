@@ -1,4 +1,20 @@
 <?php 
+if (!isset($_SESSION)) {
+    session_start();
+    
+}
+if(isset($_SESSION['usertype']))
+{
+echo $_SESSION['usertype'];
+    if($_SESSION['usertype']=='1')
+    {
+        header("Location:admin/dashboard.php");
+    }else if($_SESSION['usertype']=='0')
+    {
+        header('Location:index.php');
+    }
+}
+
 include('header.php');
 include_once ('Classes/User.php');
 
@@ -58,7 +74,7 @@ else {
                                 <div class="clearfix"> </div>
                             <a class="news-letter" href="#">
 
-                                 <label class="checkbox"></label>
+                               
                                 </a>
                             </div>
 
@@ -89,8 +105,7 @@ else {
                             
                             <div class="clearfix"> </div>
                             <a class="news-letter" href="#">
-                                <label class="checkbox"></label>
-
+                        
                             </a>
                         </div>
 
