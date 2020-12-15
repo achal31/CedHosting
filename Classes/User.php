@@ -32,9 +32,10 @@ class User
        
             if($insertuserDetail)
                 {
-                    echo "<script>alert('Please Verify Your Contact');</script>";
+                   
                     $ency_email=md5($useremail);
-                    echo "<script>window.location.href='userverification.php?static=$ency_email'</script>";
+
+                    return $ency_email;
                 }
                 else {
                     /*--------------IF QUERY DOESNT EXECUTE---------------------*/
@@ -69,6 +70,7 @@ class User
             else if($userdata['active']=='0' && $userdata['is_admin']=='0')
             {
                 $ency_email=md5($email);
+                return $ency_email;
                 echo "<script>window.location.href='userverification.php?static=$ency_email'</script>";
             }
             else if($userdata['active']=='1' && $userdata['is_admin']=='0') {
@@ -113,6 +115,33 @@ class User
             case 2: $userlogincheck= mysqli_query($this->dbh, "UPDATE tbl_user SET `active`='1' ,`phone_approved`='1' WHERE `email`='$data'");
         break;
         }
+    }
+
+    public function verifyuserIdentity($email,$ques,$answer)
+    {
+        $userlogincheck= mysqli_query($this->dbh, "SELECT * FROM tbl_user WHERE `email`='$email' AND `security_question`='$ques' AND `security_answer`='$answer'");
+        if (mysqli_num_rows($userlogincheck) > 0)
+        {
+            return 1;
         }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public function changepassword($email,$pass)
+    {
+        $ency_pass=md5($pass);
+        $userlogincheck= mysqli_query($this->dbh, "UPDATE `tbl_user` SET `password`='$ency_pass'");
+        if (mysqli_num_rows($userlogincheck) > 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        } 
+    }
        
 }

@@ -24,7 +24,9 @@ if (isset($_POST['mobileverification']))
         include_once ('Classes/User.php');
         $userdata = new User();
         $sql = $userdata->userverify($email, 2);
-        echo "<script>alert('OTP VERIFIED SUCCESSFULLY');</script>";
+        echo "<script>
+         
+        $('#mobverification').modal();</script>";
         ?>
                 <?php
         echo "<script>window.location.href='login.php'</script>";
@@ -36,7 +38,11 @@ if (isset($_GET['static']) || isset($_GET['send']) || isset($_GET['dynamic']))
     if (isset($_GET['send']))
     {
         $val = $_GET['send'];
-        echo "<script>alert('Email Sended Successfully');</script>";
+        echo "<script>
+        $(document).ready(function(){
+             $('#exampleModalCenter').modal();
+        });
+        </script>";
     }
     else if (isset($_GET['dynamic']))
     {
@@ -45,6 +51,8 @@ if (isset($_GET['static']) || isset($_GET['send']) || isset($_GET['dynamic']))
                 <script>
                    $(document).ready(function(){
                     $('#mobileverification').show();
+                    $('#mobverification').modal();
+                   
                    });
                 </script>
         <?php
@@ -130,7 +138,9 @@ if (isset($_GET['static']) || isset($_GET['send']) || isset($_GET['dynamic']))
                                 
                                 </div>
                                 </div>
+
                                 </form>
+                             
                                 </div>
                                 </div>
             </div>
@@ -138,5 +148,46 @@ if (isset($_GET['static']) || isset($_GET['send']) || isset($_GET['dynamic']))
         <!-- registration -->
     
     </div>
+
+
+       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">VERIFICATION LINK SEND</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    EMAIL VERIFICATION LINK HAS BEEN SEND PLEASE CHECK YOUR EMAIL!!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="verify" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="mobverification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">VERIFICATION OTP SEND</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+   PLEASE ENTER THE RECEIVED OTP.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="verify" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <?php include ('footer.php'); ?>

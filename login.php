@@ -24,7 +24,19 @@ $user_email=$_POST['useremail'];
 $user_pass=$_POST['userpassword'];
 $accountLogin = new User();
     $sql = $accountLogin->userLogin($user_email,$user_pass);
+    if($sql)
+    {
+        $encrypted_email=$sql;
+        echo "<script>
+        $(document).ready(function(){
+             $('#exampleModalCenter').modal();
+             $('#verifyuser').click(function() {
 
+                window.location.href = 'userverification.php?static=$encrypted_email';
+                })
+        });
+        </script>";
+    }
 
 }
 ?>
@@ -58,8 +70,28 @@ $accountLogin = new User();
                                 <input type="checkbox" onclick="myFunction()">
                                    <span>Show Password<label>*</label></span>
                                 </div>
-                                <a class="forgot" href="#">Forgot Your Password?</a>
+                                <a class="forgot" href="forgetpassword.php">Forgot Your Password?</a>
                                 <input type="submit" value="Login" name="login">
+
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">CONTACT DETAIL NOT VERIFIED!!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       DO YOU WANT TO VERIFY THEM IN CASE IF YOU WANT TO LOGIN?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="verify" data-dismiss="modal">NO</button>
+        <button type="button" class="verify" data-dismiss="modal" id="verifyuser">YES</button>
+      </div>
+    </div>
+  </div>
+</div>
                             </form>
                         </div>
                         <div class="clearfix"> </div>
@@ -72,6 +104,7 @@ $accountLogin = new User();
     <!---footer--->
     <?php include('footer.php'); ?>
     <script>
+        
         /***********FUNCTION TO USER THE PASSWORD FIELD INPUT********* */
 function myFunction(id) {
     var x = document.getElementById("userpassword");

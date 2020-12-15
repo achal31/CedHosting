@@ -32,6 +32,25 @@ if($user_password == $user_repassword)
 {
     $createAccount = new User();
     $sql = $createAccount->userRegister($user_name,$user_email,$user_mobile,$user_password,$user_question,$user_answer);
+if($sql)
+{
+    
+    $encrypted_email=$sql;
+    echo "<script>
+    $(document).ready(function(){
+         $('#exampleModalCenter').modal();
+         $('#verifyuser').click(function() {
+
+            window.location.href = 'userverification.php?static=$encrypted_email';
+            });
+
+            $('#verifylater').click(function() {
+
+                window.location.href = 'index.php';
+                });
+    });
+    </script>";
+}
 }
 else {
     echo"<script>alert('Password Field Doesnt Match');</script>";
@@ -141,6 +160,25 @@ else {
                             <div class="clearfix"> </div>
                         </div>
                 </div>
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">VERIFICATION</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     TO LOGIN PLEASE VERIFY YOUR CONTACT DETAILS FIRST?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="verify" data-dismiss="modal" id="verifylater">LATER</button>
+        <button type="button" class="verify" data-dismiss="modal" id="verifyuser">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
                         </form>
             </div>
         </div>
@@ -151,6 +189,7 @@ else {
     <?php include('footer.php'); ?> 
 
     <script >
+    
     /*------------Validation Function For the user-----------*/
     function InvalidMsg(textbox) {
 
@@ -213,5 +252,7 @@ function myFunction(id) {
         y.type = "password";
     }
 }
+
+
 
 </script> 

@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
     
 }
-include_once ('Classes/Product.php'); 
+
 $activePage = basename($_SERVER['REQUEST_URI']);
 $pages=array('linuxhosting.php','wordpresshosting.php','windowshosting.php','cmshosting.php');
 ?>
@@ -18,32 +18,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 
 <head>
-    <title>Planet Hosting a Hosting Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Planet Hosting Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+<title>CedHosting</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Planet Hosting Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-    <script type="application/x-javascript">
-        addEventListener("load", function() {
-            setTimeout(hideURLbar, 0);
-        }, false);
+<script type="application/x-javascript">
+addEventListener("load", function() {
+setTimeout(hideURLbar, 0);
+}, false);
 
-        function hideURLbar() {
-            window.scrollTo(0, 1);
-        }
-    </script>
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!---fonts-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
-   <link href="style.css" rel="stylesheet">
-   <script src="script.js"></script>
-    <!---fonts-->
+function hideURLbar() {
+window.scrollTo(0, 1);
+}
+</script>
+<!---fonts-->
+<link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="script.js"></script>
+<link rel="stylesheet" href="style.css" />
+<!---fonts-->
+
 </head>
 
 <body>
@@ -75,6 +75,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
                                     <?php 
+                                    include_once ('Classes/Product.php'); 
                                                 $category = new Product();
                                                     $sql = $category->getsubcategory();
                                                     if($sql=='0')
@@ -84,8 +85,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                     else {
                                                         foreach($sql as $subcategory)
                                                         {
+                                                          
                                                             ?>
-                                                            <li><a href='<?php echo $subcategory['link'].'?id='.$subcategory['id']; ?>' ><?php echo $subcategory['prod_name']; ?></a></li>
+                                                            <li><a href='catpage.php?id=<?php echo $subcategory['id']; ?>' ><?php echo $subcategory['prod_name']; ?></a></li>
                                                             <?php
                                                         }
                                                     }
@@ -95,7 +97,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li <?php if($activePage == "portfolio.php")echo 'class="active"'; ?> ><a href="portfolio.php">Pricing</a></li>
                             <li <?php if($activePage == "blog.php")echo 'class="active"'; ?> ><a href="blog.php">blog</a></li>
                             <li <?php if($activePage == "contact.php")echo 'class="active"'; ?> ><a href="contact.php">Contact</a></li>
-                            <li <?php if($activePage == "codes.php")echo 'class="active"'; ?> ><a href="codes.php"><i class="fa fa-shopping-cart" style="font-size:22px;color:#E6653D"></i></a></li>
+                            <li <?php if($activePage == "codes.php")echo 'class="active"'; ?> ><a href="cart.php"><i class="fa fa-shopping-cart" style="font-size:22px;color:#E6653D"><span class="badge badge-success"><?php if(isset($_SESSION['cart'])){ $i=0; foreach($_SESSION['cart'] as $result ){ $i++;} echo $i; } ?></span></i></a></li>
                            <?php if(isset($_SESSION['usertype']))
                            {   
                                if($_SESSION['usertype']=='0')

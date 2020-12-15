@@ -46,7 +46,7 @@ class Product
         $category = mysqli_fetch_assoc($selectedcategoryid);
         if($category==0)
         {
-        $returncategory= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,link,prod_available,prod_launch_date) VALUES('$selectedcategory','$subcategory','$categoryhref','1',now())");
+        $returncategory= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,html,prod_available,prod_launch_date) VALUES('$selectedcategory','$subcategory','$categoryhref','1',now())");
       return 1;
         }
         return 0;
@@ -59,8 +59,7 @@ class Product
         /*---------------------QUERY TO PICK THE CATEGORY PROD_PARENT_ID-----------------------------*/
         $selectedcategoryid= mysqli_query($this->dbh, "SELECT * FROM tbl_product where `prod_parent_id`='0'");
         $category = mysqli_fetch_assoc($selectedcategoryid);
-        if($category>0)
-        {
+       
             /*-------------------QUERY TO GET THE SUBCATEGORY WHICH IS EQUAL TO THE ID OF CATEGORY--------------*/
         $selectsubcategory= mysqli_query($this->dbh, "SELECT * FROM tbl_product where `prod_parent_id`='$category[id]'");
         if (mysqli_num_rows($selectsubcategory) > 0)
@@ -71,9 +70,21 @@ class Product
         {
             return 0;
         }
-        }
+        
     }
 
+    public function selectsubcategory($id)
+    {
+        $selectsubcategory= mysqli_query($this->dbh, "SELECT * FROM tbl_product where `id`='$id'");
+        if (mysqli_num_rows($selectsubcategory) > 0)
+        {
+            return $selectsubcategory;
+        }
+        else
+        {
+            return 0;
+        }
+    }
     /*---------------------------FUNCTION TO DELETE THE SUBCATEGORY---------------------------------*/
     public function deleteitem($itemid)
     {
@@ -88,7 +99,7 @@ class Product
         $result=$sql->num_rows;
         if($result==0)
         {
-        $updatesubcategory=mysqli_query($this->dbh, "UPDATE tbl_product SET `prod_name`='$name',`link`='$href',`prod_available`='$status' WHERE `id`='$id'");
+        $updatesubcategory=mysqli_query($this->dbh, "UPDATE tbl_product SET `prod_name`='$name',`html`='$href',`prod_available`='$status' WHERE `id`='$id'");
         if($updatesubcategory)
         {
             return 1;
@@ -105,7 +116,7 @@ class Product
     /*-----------------FUNCTION TO INSERT THE NEW PRODUCT IN THE DATABASE----------------------------------*/
     public function insertproduct($productsubcategoryid,$productname,$producturl,$productstatus,$productmonthlyprice,$productannualprice,$productsku,$feature_encode)
     {
-        $instproduct= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,link,prod_available,prod_launch_date) VALUES('$productsubcategoryid','$productname','$producturl','$productstatus',now())");
+        $instproduct= mysqli_query($this->dbh, "INSERT INTO tbl_product (prod_parent_id,prod_name,html,prod_available,prod_launch_date) VALUES('$productsubcategoryid','$productname','$producturl','$productstatus',now())");
         $last_id = mysqli_insert_id($this->dbh);
         if($instproduct)
         {
@@ -126,7 +137,7 @@ class Product
     /*---------------FUNCTION TO SHOW THE PRODUCT TABLE ON VIEW PRODUCT PAGE-----------------------------*/
     public function fetchproducttable()
     {
-        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id,prod_parent_id,prod_name,link,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id");
+        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id,prod_parent_id,prod_name,html,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id");
         if (mysqli_num_rows($sql) > 0)
         {
             return $sql;
@@ -157,10 +168,12 @@ class Product
         } 
     }
 
+    /*-------------------FUNCTION TO UPDATE THE PRODUCT DETAILS--------------------------*/
+
     public function updateproduct($productsubcategoryid,$productname,$producturl,$productstatus,$productmonthlyprice,$productannualprice,$productsku,$feature_encode,$prod_id)
     {
         $sql=mysqli_query($this->dbh,"UPDATE tbl_product_description as td INNER JOIN tbl_product as tp ON td.prod_id = tp.id SET
-tp.prod_name = '$productname', tp.prod_parent_id ='$productsubcategoryid',tp.link = '$producturl',tp.prod_available ='$productstatus',
+tp.prod_name = '$productname', tp.prod_parent_id ='$productsubcategoryid',tp.html = '$producturl',tp.prod_available ='$productstatus',
 td.description = '$feature_encode', td.mon_price ='$productmonthlyprice',td.annual_price ='$productannualprice',td.sku ='$productsku' WHERE tp.id='$prod_id'");
 
     echo "<script>window.location.href='viewproduct.php?productupdate=1'</script>";
@@ -169,7 +182,20 @@ td.description = '$feature_encode', td.mon_price ='$productmonthlyprice',td.annu
 /*--------------------SHOWING DYNAMIC DATA TO THE USER ON THE USER PANEL-------------------------------------*/
 public function showdynamicdata($productid)
     {
-        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id,prod_parent_id,prod_name,link,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id WHERE tbl_product.prod_parent_id='$productid'");
+        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id as product_id,prod_parent_id,prod_name,html,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id WHERE tbl_product.prod_parent_id='$productid'");
+        if (mysqli_num_rows($sql) > 0)
+        {
+            return $sql;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public function selecttheproduct($productid)
+    {
+        $sql=mysqli_query($this->dbh,"SELECT tbl_product_description.id,prod_id,description,mon_price,annual_price,sku,tbl_product.id as product_id,prod_parent_id,prod_name,html,prod_available,prod_launch_date FROM tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id =tbl_product.id WHERE tbl_product.id='$productid'");
         if (mysqli_num_rows($sql) > 0)
         {
             return $sql;
@@ -180,3 +206,4 @@ public function showdynamicdata($productid)
         }
     }
 }
+

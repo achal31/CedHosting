@@ -115,7 +115,7 @@ foreach($result as $productdetail)
   $productstatus=$productdetail['prod_available'];
   $productid=$productdetail['productid'];
   $prodname=$productdetail['prod_name'];
-  $link=$productdetail['link'];
+  $link=$productdetail['html'];
   $monthlyprice=$productdetail['mon_price'];
   $annualprice=$productdetail['annual_price'];
   $productsku=$productdetail['sku'];

@@ -94,7 +94,7 @@ if (isset($_GET['edit']))
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-blue text-white dimension" id="addon-wrapping">Sub Category Href<span class="text-red">*</span></span>
                                         </div>
-                                        <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" value="<?php echo $fetchsubcategory['link']; ?>" required>
+                                        <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" value="<?php echo $fetchsubcategory['html']; ?>" required>
                                     </div>
                                     <h6 class="form-control-label">Product Availability</h6>
                                     
