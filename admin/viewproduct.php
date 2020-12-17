@@ -107,9 +107,9 @@ else if(isset($_GET['productadded']))
                                   echo "<td>$subcategory[prod_name]</td>";
                                 }
                                 echo "<td>$product[prod_name]</td>";
-                                echo "<td>$product[mon_price]</td>";
-                                echo "<td>$product[annual_price]</td>";
-                                echo "<td>$product[sku]</td>";
+                                echo "<td>₹$product[mon_price]</td>";
+                                echo "<td>₹$product[annual_price]</td>";
+                             
 
                                 /*-----------------JSON DECODED-------------------------*/
                                 $decoded=json_decode($product['description']);
@@ -119,9 +119,10 @@ else if(isset($_GET['productadded']))
                                 $producttechnology=$decoded->producttechnology;
                                 $productmailbox=$decoded->productmailbox;
 
-                             echo "<td> $productweb</td>";
+                                echo "<td> $productweb GB</td>";
                              echo "<td> $productfreedomain</td>";
-                             echo "<td> $productbandwidth</td>";
+                             echo "<td> $productbandwidth GB</td>";
+                             echo "<td>$product[sku]</td>";
                              echo "<td> $producttechnology</td>";
                              echo "<td> $productmailbox</td>";
                              if($product['prod_available']=='1')

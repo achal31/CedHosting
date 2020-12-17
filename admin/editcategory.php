@@ -6,7 +6,6 @@ if (isset($_POST['updatesubcategory']))
 {
     $subcategoryid = $_POST['id'];
     $subcategory = $_POST['subcategory'];
-    $subcategoryhref = $_POST['subcategoryhref'];
     if (isset($_POST['check']))
     {
         $available = '1';
@@ -16,7 +15,7 @@ if (isset($_POST['updatesubcategory']))
         $available = '0';
     }
 
-    $alert = $category->updatesubcategory($subcategoryid, $subcategory, $subcategoryhref, $available);
+    $alert = $category->updatesubcategory($subcategoryid, $subcategory, $available);
     if ($alert == '1')
     {
 ?>
@@ -90,12 +89,7 @@ if (isset($_GET['edit']))
                                         </div>
                                         <input type="text" class="form-control" name="subcategory" placeholder="Enter A Sub Category" value="<?php echo $fetchsubcategory['prod_name']; ?>" required>
                                     </div>
-                                    <div class="input-group flex-nowrap mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-blue text-white dimension" id="addon-wrapping">Sub Category Href<span class="text-red">*</span></span>
-                                        </div>
-                                        <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" value="<?php echo $fetchsubcategory['html']; ?>" required>
-                                    </div>
+                                   
                                     <h6 class="form-control-label">Product Availability</h6>
                                     
                                 <label class="custom-toggle">
@@ -106,7 +100,7 @@ if (isset($_GET['edit']))
                                 <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
                                 </label>
                                   
-                            
+                                    
                                
                                     <input type="hidden" name="id" value="<?php echo $fetchsubcategory['id'] ?>">
                                     <div class="input-group-prepend">

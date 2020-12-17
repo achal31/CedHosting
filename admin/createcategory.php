@@ -26,8 +26,7 @@ if(isset($_POST['addsubcategory']))
 {
     $subcategory=$_POST['subcategory'];
     $selectedcategory=$_POST['selectedcategory'];
-    $categoryhref=$_POST['subcategoryhref'];
-    $sql = $category->addsubcategory($subcategory,$selectedcategory,$categoryhref);
+    $sql = $category->addsubcategory($subcategory,$selectedcategory);
     if($sql=='1')
     {
        $message="<div class='alert alert-success alert-dismissible fade show' role='alert' id='errormsg'>
@@ -120,12 +119,22 @@ echo "<div class='alert alert-danger alert-dismissible fade show' role='alert' i
                         </select>
                                 </div>
                                 <h3 class="mb-0 text-dark">ADD SUB CATEGORY</h3>
-                                <div class="input-group mb-3">
+                          
                                     <input type="text" class="form-control" name="subcategory" pattern='^[a-zA-Z\s]*[a-zA-Z]+[.a-zA-Z0-9\-]*$' placeholder="Enter A Sub Category" required>
-                                    <input type="text" class="form-control" name="subcategoryhref" placeholder="Enter The Page Href" required>
+                                  
+  
+<div class="mb-5">
+<h3 class="mb-0 text-dark">HTML</h3>
+         <textarea id="editor"></textarea>
+</div>
+       
+    
+    
+
+
                                     <div class="input-group-prepend">
                                         <input type="submit" class="btn" id="button-addon1" name="addsubcategory" value="SAVE SUB CATEGORY">
-                                    </div>
+                                  
                                 </div>
                             </form>
 
@@ -223,9 +232,37 @@ echo "<div class='alert alert-danger alert-dismissible fade show' role='alert' i
                 </div>
             </div>
 <?php include('footer.php'); ?>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+
 
 <script>
 $(document).ready(function() {
+    tinymce.init({
+  selector: "textarea#editor",
+  skin: "bootstrap",
+  plugins: "lists, link, image, media",
+  toolbar:
+    "h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help",
+  menubar: false,
+  setup: (editor) => {
+    // Apply the focus effect
+    editor.on("init", () => {
+      editor.getContainer().style.transition =
+        "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+    });
+    editor.on("focus", () => {
+      (editor.getContainer().style.boxShadow =
+        "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+        (editor.getContainer().style.borderColor = "#80bdff");
+    });
+    editor.on("blur", () => {
+      (editor.getContainer().style.boxShadow = ""),
+        (editor.getContainer().style.borderColor = "");
+    });
+  },
+});
+  
     $('#subcategorytable').DataTable();
 });
 </script>

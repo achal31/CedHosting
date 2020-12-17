@@ -41,6 +41,8 @@ if(isset($_SESSION['cart']))
 include_once ('Classes/Product.php');
 $product = new Product();
 $i=1;
+$monthlytotal=0;
+$annualtotal=0;
 foreach ($_SESSION['cart'] as $id)
 {
     $sql = $product->selecttheproduct($id);
@@ -50,9 +52,11 @@ foreach ($_SESSION['cart'] as $id)
     }
     else
     {
-
+       
         foreach ($sql as $result)
         {
+            $monthlytotal=$monthlytotal+(int)$result['mon_price'];
+            $annualtotal=$annualtotal+(int)$result['annual_price'];
             $productname = $result['prod_name'];
             $product_id = $result['product_id'];
             $decoded = json_decode($result['description']);
@@ -86,9 +90,15 @@ foreach ($_SESSION['cart'] as $id)
 
 <?php
         }
+
     }
     $i++;
 }
+?>
+<tr>
+<td colspan="3">Calculated charge:</td><td>₹<?php echo $monthlytotal; ?></td><td>₹<?php echo $annualtotal; ?></td>  
+</tr>
+<?php
 }
 else {
 ?>

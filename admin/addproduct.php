@@ -311,7 +311,7 @@ else
 $(document).ready(function() {
   $('#Updatebtn').removeAttr('disabled'); 
   (function() {
-    $('form > input[type=text]').on('blur',function() {
+    $('form > input[type=text]').keyup(function() {
 
         var empty = false;
         $('form > input[type=text]').each(function() {
@@ -450,7 +450,7 @@ $(document).ready(function() {
 
     $.validator.addMethod("technology",function(value,element){
         return this.optional(element) || /(^[a-zA-Z0-9]*[a-zA-Z]+[0-9]*(,?([a-zA-Z0-9]*[a-zA-Z]+[0-9]*)+)*$)/.test(value);
-    },"Enter Value That is only Numeric or Only Alphabetic");
+    },"Enter Value That is only Alphabatic or Only Alphabetic");
 
    
 });

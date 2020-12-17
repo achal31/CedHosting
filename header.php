@@ -97,7 +97,7 @@ window.scrollTo(0, 1);
                             <li <?php if($activePage == "portfolio.php")echo 'class="active"'; ?> ><a href="portfolio.php">Pricing</a></li>
                             <li <?php if($activePage == "blog.php")echo 'class="active"'; ?> ><a href="blog.php">blog</a></li>
                             <li <?php if($activePage == "contact.php")echo 'class="active"'; ?> ><a href="contact.php">Contact</a></li>
-                            <li <?php if($activePage == "codes.php")echo 'class="active"'; ?> ><a href="cart.php"><i class="fa fa-shopping-cart" style="font-size:22px;color:#E6653D"><span class="badge badge-success"><?php if(isset($_SESSION['cart'])){ $i=0; foreach($_SESSION['cart'] as $result ){ $i++;} echo $i; } ?></span></i></a></li>
+                            <li <?php if($activePage == "codes.php")echo 'class="active"'; ?> ><a href="cart.php"><i class="fa fa-shopping-cart" style="font-size:22px;color:#E6653D"><span class="badge badge-success"><?php if(isset($_SESSION['cart'])){echo count($_SESSION['cart']); } ?></span></i></a></li>
                            <?php if(isset($_SESSION['usertype']))
                            {   
                                if($_SESSION['usertype']=='0')

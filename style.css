@@ -36,7 +36,7 @@
     font-size: 20px;
     font-weight: bolder;
     text-align: center;
-    font-family: "Times New Roman", Times, serif;
+    font-family: Georgia, serif;
 }
 
 .modal-body-verification {
@@ -44,7 +44,7 @@
     font-size: 17px;
     font-weight: bolder;
     text-align: left;
-    font-family: "Times New Roman", Times, serif;
+    font-family: Georgia, serif;
 }
 
 .modal-body-verification {
@@ -56,7 +56,7 @@
     font-size: 17px;
     font-weight: bolder;
     text-align: center;
-    font-family: "Times New Roman", Times, serif;
+    font-family: Georgia, serif;
 }
 
 .modal-footer {

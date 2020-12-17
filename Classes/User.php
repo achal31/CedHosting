@@ -133,15 +133,13 @@ class User
     public function changepassword($email,$pass)
     {
         $ency_pass=md5($pass);
-        $userlogincheck= mysqli_query($this->dbh, "UPDATE `tbl_user` SET `password`='$ency_pass'");
-        if (mysqli_num_rows($userlogincheck) > 0)
+        $userlogincheck= mysqli_query($this->dbh, "UPDATE `tbl_user` SET `password`='$ency_pass' WHERE `email`='$email'");
+        if($userlogincheck)
         {
             return 1;
-        }
-        else
-        {
+        }else {
             return 0;
-        } 
+        }
     }
        
 }
